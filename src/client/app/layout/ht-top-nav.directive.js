@@ -33,9 +33,11 @@
             }
 
             function checkWithinIntro() {
-                var aboutHeight = $document.find('#about').offset().top;
+                var aboutTopPosition = $document.find('#about').offset().top,
+                    navbarHeight = $document.find('#header-nav').height(),
+                    triggerHeight = aboutTopPosition - navbarHeight;
 
-                vm.inHeader = $state.current.url === '/' && $document.scrollTop() <= aboutHeight;
+                vm.inHeader = $state.current.url === '/' && $document.scrollTop() <= triggerHeight;
 
                 console.log(vm.inHeader);
             }
