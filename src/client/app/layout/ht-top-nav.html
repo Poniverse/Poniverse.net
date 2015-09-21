@@ -1,0 +1,16 @@
+<nav ng-class="{'in-header': vm.inHeader}" id="header-nav">
+    <div class="container">
+        <a href="/" class="logo"><i class="icon-poniverse"></i> {{ vm.navline.inHeader }}</a>
+        <menu>
+            <li ng-show="vm.user">
+                <ul>
+                    <li class="display-name">{{ vm.user.display_name }}</li>
+                    <li><a href="/account">Preferences</a></li>
+                    <li><a href="" ng-click="vm.logout()"><i class="icon-off"></i> Logout</a></li>
+                </ul>
+            </li>
+            <li ng-hide="vm.user"><a ng-click="vm.register()" class="sign-up">register</a></li>
+            <li ng-hide="vm.user"><a ng-click="vm.login()" class="button button-account">sign in</a></li>
+        </menu>
+    </div>
+</nav>
