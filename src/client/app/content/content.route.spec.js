@@ -15,17 +15,17 @@ describe('content routes', function () {
         bard.verifyNoOutstandingHttpRequests();
 
         it('should map state content to url / ', function() {
-            expect($state.href('content', {})).to.equal('/');
+            expect($state.href('home', {})).to.equal('/');
         });
 
         it('should map / route to content View template', function () {
-            expect($state.get('content').templateUrl).to.equal(view);
+            expect($state.get('home').templateUrl).to.equal(view);
         });
 
         it('of content should work with $state.go', function () {
-            $state.go('content');
+            $state.go('home');
             $rootScope.$apply();
-            expect($state.is('content'));
+            expect($state.is('home'));
         });
     });
 });

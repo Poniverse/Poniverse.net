@@ -1,0 +1,525 @@
+<section id="page-header">
+    <div class="container">
+        <h1>API</h1>
+        <p class="lead">
+            Our API lets you use Poniverse accounts to log users into your own app!<br>
+            Coming soon: integration with <a href="https://pony.fm/" target="_blank">Pony.fm</a>. /)
+        </p>
+    </div>
+</section>
+
+<section class="api">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="phabricator-remarkup-toc">
+                    <div class="phabricator-remarkup-toc-header">Table of Contents</div>
+                    <ul>
+                        <li><a href="/api#obtaining-authorization">Obtaining Authorization</a></li>
+                        <ul>
+                            <ul>
+                                <li><a href="/api#authorization-request">Authorization Request</a></li>
+                                <li><a href="/api#authorization-success">Authorization Success</a></li>
+                                <li><a href="/api#authorization-error">Authorization Error</a></li>
+                            </ul>
+                        </ul>
+                        <li><a href="/api#obtaining-access">Obtaining Access</a></li>
+                        <ul>
+                            <ul>
+                                <li><a href="/api#access-token-request">Access Token Request</a></li>
+                                <li><a href="/api#access-token-success">Access Token Success</a></li>
+                                <li><a href="/api#access-token-error">Access Token Error</a></li>
+                            </ul>
+                        </ul>
+                        <li><a href="/api#obtaining-user-info">Obtaining User Info</a></li>
+                        <ul>
+                            <ul>
+                                <li><a href="/api#user-info-request">User Info Request</a></li>
+                                <li><a href="/api#user-info-response">User Info Response</a></li>
+                                <li><a href="/api#user-info-error">User Info Error</a></li>
+                            </ul>
+                            <li><a href="/api#facilitating-external-re">Facilitating External Registrations</a></li>
+                            <ul>
+                                <li><a href="/api#downloading-existing-use">Downloading existing user info for offline existence
+                                    checks</a></li>
+                                <ul>
+                                    <li><a href="/api#limiting-results">Limiting results</a></li>
+                                </ul>
+                                <li><a href="/api#registering-a-new-user-a">Registering a new user account</a></li>
+                            </ul>
+                        </ul>
+                        <li><a href="/api#refreshing-access">Refreshing Access</a></li>
+                        <ul>
+                            <ul>
+                                <li><a href="/api#token-refresh-request">Token Refresh Request</a></li>
+                                <li><a href="/api#token-refresh-success">Token Refresh Success</a></li>
+                                <li><a href="/api#token-refresh-error">Token Refresh Error</a></li>
+                            </ul>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="phabricator-remarkup remarkup-has-toc">
+                    <p>Poniverse provides an OAuth 2 API, for applications to be able to connect to Poniverse, and access
+                        user information.<br>
+                        A document that covers the OAuth in detail is available here: <a
+                                href="https://tools.ietf.org/html/rfc6749" class="remarkup-link" target="_blank"
+                                rel="noreferrer">https://tools.ietf.org/html/rfc6749</a></p>
+
+                    <h2 class="remarkup-header"><a name="obtaining-authorization"></a>Obtaining Authorization</h2>
+
+                    <p>Before a client application can access user information from Poniverse, the user must grant the app
+                        authorization to access their information. This is done in the form of an authorization request, where
+                        the user is sent to the Poniverse authorization endpoint <tt class="remarkup-monospaced">https://poniverse.net/oauth/authorize</tt>.
+                    </p>
+
+                    <h4 class="remarkup-header"><a name="authorization-request"></a>Authorization Request</h4>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>response_type</td>
+                            <td>The value <em>must</em> be set to "code".</td>
+                        </tr>
+                        <tr>
+                            <td>client_id</td>
+                            <td>The client identifier, issued by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>redirect_uri</td>
+                            <td>The address to which the response is sent.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>(<em>Recommended</em>) An arbitrary value to prevent CSRF.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>So, for example, an authorization request URL might look like this:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">GET https://poniverse.net/oauth/authorize
+        ?response_type=code
+        &amp;client_id=12345
+        &amp;redirect_uri=https://pony.site.com/oauth.php
+        &amp;state=123456ABCDEF
+HTTP/1.1</pre>
+                    </div>
+
+
+                    <div class="remarkup-note"><span class="remarkup-note-word">NOTE:</span> It is highly recommended that
+                        <tt class="remarkup-monospaced">state</tt> be included as a parameter, to serve as validation and to
+                        prevent CSRF.
+                    </div>
+
+
+                    <h4 class="remarkup-header"><a name="authorization-success"></a>Authorization Success</h4>
+
+                    <p>Given that the request gets validated, and the user grants the client application authorization to
+                        access their account information, Poniverse will issue the client app an authorization code, which is
+                        used make an access request. The code is included as a query string parameter as part of the <tt
+                                class="remarkup-monospaced">redirect_uri</tt> supplied in the request.</p>
+
+                    <div class="remarkup-important"><span class="remarkup-note-word">IMPORTANT:</span> An authorization code
+                        may only be used once, and should be discarded after use. If an authorization code is used more than
+                        once, the request will be denied, all access tokens issued to the code may be revoked.
+                    </div>
+
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>code</td>
+                            <td>An authorization code from the server.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>The state parameter used in the request.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>If a <tt class="remarkup-monospaced">state</tt> parameter was included in the request, it will appear
+                        in the response, and should be validated to prevent CSRF.</p>
+
+                    <h4 class="remarkup-header"><a name="authorization-error"></a>Authorization Error</h4>
+
+                    <p>If Poniverse was unable to validate information included in the request, or the user did not grant
+                        authorization to their information, the server will respond with an authorization error. The error,
+                        along with a description and the state parameter are included as a fragment parameter as part of the
+                        <tt class="remarkup-monospaced">redirect_uri</tt> supplied in the request. If the redirect address
+                        supplied was invalid, the user will be informed, and will not be redirected.</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>error</td>
+                            <td>An error code. See <a href="https://tools.ietf.org/html/rfc6749#section-4.1.2.1"
+                                                      class="remarkup-link" target="_blank" rel="noreferrer">https://tools.ietf.org/html/rfc6749#section-4.1.2.1</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>error_description</td>
+                            <td>A human readable error text.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>The state parameter used in the request.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>The <tt class="remarkup-monospaced">error_description</tt> parameter is optional, and its presence
+                        should checked for before use. If a <tt class="remarkup-monospaced">state</tt> parameter was included
+                        in the request, it will appear in the response, and should be validated to prevent CSRF.</p>
+
+                    <h2 class="remarkup-header"><a name="obtaining-access"></a>Obtaining Access</h2>
+
+                    <p>Once the client application receives authorization from the server, it must request an <tt
+                            class="remarkup-monospaced">access_token</tt> (after which the authorization code should be
+                        discarded), which will serve as a key for accessing the authorizing user's information. The request is
+                        made to the Poniverse token endpoint <tt class="remarkup-monospaced">https://poniverse.net/oauth/access_token</tt>.
+                    </p>
+
+                    <h4 class="remarkup-header"><a name="access-token-request"></a>Access Token Request</h4>
+
+                    <p>Requesting an access token is done through <tt class="remarkup-monospaced">POST</tt>, and should
+                        include the following parameters:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>grant_type</td>
+                            <td>The value <em>must</em> be "authorization_code".</td>
+                        </tr>
+                        <tr>
+                            <td>code</td>
+                            <td>The authorization code from the previous step.</td>
+                        </tr>
+                        <tr>
+                            <td>redirect_uri</td>
+                            <td>(<em>Required!</em>) The address to which the response is sent.</td>
+                        </tr>
+                        <tr>
+                            <td>client_id</td>
+                            <td>The client identifier, issued by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>client_secret</td>
+                            <td>The client secret, issued by Poniverse.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="remarkup-note"><span class="remarkup-note-word">NOTE:</span> If a <tt
+                            class="remarkup-monospaced">redirect_uri</tt> was included in the authorization request, the
+                        value of this parameter must be identical to its previous value!
+                    </div>
+
+
+                    <h4 class="remarkup-header"><a name="access-token-success"></a>Access Token Success</h4>
+
+                    <p>If the access token request is validated and accepted by Poniverse, a <tt
+                            class="remarkup-monospaced">access_token</tt> will be issued, and the response will contain it
+                        and the following <strong>JSON encoded</strong> values in the body:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>access_token</td>
+                            <td>The access token granted by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>token_type</td>
+                            <td>The type of the token that was issued.</td>
+                        </tr>
+                        <tr>
+                            <td>expires_in</td>
+                            <td>The duration for which the token is valid, in seconds.</td>
+                        </tr>
+                        <tr>
+                            <td>refresh_token</td>
+                            <td>The refresh token, used to obtain new access tokens.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>The state parameter used in the authorization request.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Here's an example of what a successful response to a token request may look like:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+    "access_token":"2YotnFZFEjr1zCsicMWpAA",
+    "token_type":"example",
+    "expires_in":3600,
+    "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+    "state": "123456ABCDEF"
+}</pre>
+                    </div>
+
+                    <p>Once the response arrives at the endpoint, it should be decoded and the result stored for further
+                        use. If a <tt class="remarkup-monospaced">refresh_token</tt> was provided, it can be used later to
+                        issue further access tokens without making additional authorization requests.</p>
+
+                    <p>The value <tt class="remarkup-monospaced">expires_in</tt> and <tt class="remarkup-monospaced">refresh_token</tt>
+                        are optional, and their presence should be checked for before they are used. If a <tt
+                                class="remarkup-monospaced">state</tt> parameter was included in the request, it will appear
+                        in the body of the response, and should be validated to prevent CSRF.</p>
+
+                    <h4 class="remarkup-header"><a name="access-token-error"></a>Access Token Error</h4>
+
+                    <p>If the authorization code provided was not valid, or Poniverse was unable to issue an <tt
+                            class="remarkup-monospaced">access_token</tt> for some other reason, the response an error code
+                        <strong>JSON encoded</strong> in the body:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>error</td>
+                            <td>An error code. See <a href="https://tools.ietf.org/html/rfc6749#section-5.2"
+                                                      class="remarkup-link" target="_blank" rel="noreferrer">https://tools.ietf.org/html/rfc6749#section-5.2</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>error_description</td>
+                            <td>A human readable error text.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>The state parameter used in the request.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Here's an example of what an error response to a token request may look like:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+    "error":"invalid_request",
+    "state":"123456ABCDEF"
+}</pre>
+                    </div>
+
+                    <p>The <tt class="remarkup-monospaced">error_description</tt> parameter is optional, and its presence
+                        should checked for before use. If a <tt class="remarkup-monospaced">state</tt> parameter was included
+                        in the request, it will appear in the body of the response, and should be validated to prevent CSRF.
+                    </p>
+
+                    <h2 class="remarkup-header"><a name="obtaining-user-info"></a>Obtaining User Info</h2>
+
+                    <p>Once an access token has been issues by Poniverse, it can be used to poll the Poniverse API for user
+                        information. The Poniverse API endpoint is located at <tt class="remarkup-monospaced">https://api.poniverse.net/v1/users/</tt>,
+                        and currently provides read access to the user Id, username, display name, and email fields.</p>
+
+                    <h4 class="remarkup-header"><a name="user-info-request"></a>User Info Request</h4>
+
+                    <p>The Poniverse user API endpoint takes one parameter, <tt
+                            class="remarkup-monospaced">access_token</tt>, which is the token issued during the OAuth
+                        process. The parameter can be passed along as part of the fragment. The endpoint also takes one URL
+                        parameter, which may be either the user Id of user being read, or <tt
+                                class="remarkup-monospaced">me</tt>.</p>
+
+                    <p>So, an example request might look like:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">GET https://api.poniverse.net/v1/users/me
+        ?access_token=2YotnFZFEjr1zCsicMWpAA
+HTTP/1.1</pre>
+                    </div>
+
+
+                    <h4 class="remarkup-header"><a name="user-info-response"></a>User Info Response</h4>
+
+                    <p>Given you polled the API using <tt class="remarkup-monospaced">me</tt> instead of a user Id, and the
+                        access token used in the request is valid, Poniverse will respond with the <tt
+                                class="remarkup-monospaced">user_id</tt>, <tt class="remarkup-monospaced">username</tt>, <tt
+                                class="remarkup-monospaced">display_name</tt>, and <tt class="remarkup-monospaced">email</tt>
+                        fields <strong>JSON encoded</strong> in the response body.</p>
+
+                    <p>Given for some incomprehensible reason you requested Lavo's information, you'd receive something
+                        like:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">{
+    "id":3757,
+    "username":"Lavoaster",
+    "display_name":"Lavoaster",
+    "email":"adam@lavoaster.co.uk"
+}</pre>
+                    </div>
+
+                    <p>If the request were made with a specific user Id, the username and email fields will be omitted:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">{
+    "id":1,
+    "display_name":"Feld0"
+}</pre>
+                    </div>
+
+
+                    <h4 class="remarkup-header"><a name="user-info-error"></a>User Info Error</h4>
+
+                    <p>If the above fields aren't in the response, it's probably an error.</p>
+
+                    <h2 class="remarkup-header"><a name="refreshing-access"></a>Refreshing Access</h2>
+
+                    <p>Access tokens issued by Poniverse had a limited duration of validity (usually one hour), and must be
+                        refreshed once they expire. A token refresh request should be made to the Poniverse token endpoint
+                        using the <tt class="remarkup-monospaced">refresh_token</tt>.</p>
+
+                    <h4 class="remarkup-header"><a name="token-refresh-request"></a>Token Refresh Request</h4>
+
+                    <p>Refreshing an access token is done through <tt class="remarkup-monospaced">POST</tt>, and should
+                        include the following parameters:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>grant_type</td>
+                            <td>The value <em>must</em> be "refresh_token".</td>
+                        </tr>
+                        <tr>
+                            <td>refresh_token</td>
+                            <td>The refresh token, issued by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>client_id</td>
+                            <td>The client identifier, issued by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>client_secret</td>
+                            <td>The client secret, issued by Poniverse.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <h4 class="remarkup-header"><a name="token-refresh-success"></a>Token Refresh Success</h4>
+
+                    <p>If the refresh token request is validated and accepted by Poniverse, a new <tt
+                            class="remarkup-monospaced">access_token</tt> will be issued (and a new refresh token may be
+                        issued as well), and the response will contain it and the following <strong>JSON encoded</strong>
+                        values in the body:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>access_token</td>
+                            <td>The access token granted by Poniverse.</td>
+                        </tr>
+                        <tr>
+                            <td>token_type</td>
+                            <td>The type of the token that was issued.</td>
+                        </tr>
+                        <tr>
+                            <td>expires_in</td>
+                            <td>The duration for which the token is valid, in seconds.</td>
+                        </tr>
+                        <tr>
+                            <td>refresh_token</td>
+                            <td>The refresh token, used to obtain new access tokens.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="remarkup-header"><a name="token-refresh-error"></a>Token Refresh Error</h4>
+
+                    <p>If the refresh token provided was not valid, or Poniverse was unable refresh the token for some other
+                        reason, the response an error code <strong>JSON encoded</strong> in the body:</p>
+
+                    <table class="remarkup-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>error</td>
+                            <td>An error code. See <a href="https://tools.ietf.org/html/rfc6749#section-5.2"
+                                                      class="remarkup-link" target="_blank" rel="noreferrer">https://tools.ietf.org/html/rfc6749#section-5.2</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>error_description</td>
+                            <td>A human readable error text.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Here's an example of what an error response to a token request may look like:</p>
+
+                    <div class="remarkup-code-block" data-code-lang="text" data-sigil="remarkup-code-block"><pre
+                            class="remarkup-code">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+    "error":"invalid_request"
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="sponsors x-contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="join-us">
+                <p class="lead">Want to use our API?</p>
+                <a href="mailto:feld0@poniverse.net&subject=Poniverse%20API%20Request" target="_blank" class="button">let&#39;s get in touch</a>
+            </div>
+        </div>
+
+    </div>
+</section>
