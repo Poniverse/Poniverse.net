@@ -3,10 +3,10 @@
 
     angular
         .module('app.layout')
-        .directive('htTopNav', htTopNav);
+        .directive('pvTopNav', pvTopNav);
 
     /* @ngInject */
-    function htTopNav () {
+    function pvTopNav () {
         var directive = {
             bindToController: true,
             controller: TopNavController,
@@ -15,7 +15,7 @@
             scope: {
                 'inHeader': '='
             },
-            templateUrl: 'app/layout/ht-top-nav.html'
+            templateUrl: 'app/layout/pv-top-nav.html'
         };
 
         /* @ngInject */
