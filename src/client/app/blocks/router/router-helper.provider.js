@@ -81,6 +81,7 @@
 
             function init() {
                 handleRoutingErrors();
+                handleStateChangeUpdates();
                 updateDocTitle();
             }
 
@@ -93,6 +94,16 @@
                         handlingStateChangeError = false;
                         var title = (toState.title || '') + ' ' + config.docTitle;
                         $rootScope.title = title; // data bind to <title>
+                    }
+                );
+            }
+
+            function handleStateChangeUpdates() {
+                $rootScope.$on("$stateChangeSuccess",
+                    function (event, toState, toParams, fromState, fromParams) {
+                        // This works, but I'd rather stick to using $window.
+                        // TODO: Use $window here instead
+                        window.scrollTo(0, 0);
                     }
                 );
             }
