@@ -32,11 +32,18 @@
             }
 
             function checkWithinIntro() {
+                if ($state.current.name !== 'home') {
+                    vm.inHeader = false;
+                    $scope.$applyAsync();
+
+                    return;
+                }
+
                 var aboutTopPosition = $document.find('#about').offset().top,
                     navbarHeight = $document.find('#pv-top-nav').height(),
                     triggerHeight = aboutTopPosition - navbarHeight - 1;
 
-                vm.inHeader = $state.current.url === '/' && $document.scrollTop() <= triggerHeight;
+                vm.inHeader = $document.scrollTop() <= triggerHeight;
 
                 $scope.$applyAsync();
             }
