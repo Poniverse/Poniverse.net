@@ -1,17 +1,17 @@
 module.exports = function() {
-    var client = './src/client/';
-    var server = './src/server/';
+    var client = 'src/client/';
+    var server = 'src/server/';
     var clientApp = client + 'app/';
-    var report = './report/';
+    var report = 'report/';
     var root = './';
     var specRunnerFile = 'specs.html';
-    var temp = './.tmp/';
+    var temp = '.tmp/';
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({devDependencies: true})['js'];
     var bower = {
         json: require('./bower.json'),
-        directory: './bower_components/',
-        ignorePath: '../..'
+        directory: 'bower_components/',
+        ignorePath: '../../'
     };
     var nodeModules = 'node_modules';
 

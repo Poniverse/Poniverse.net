@@ -68,7 +68,8 @@ gulp.task('styles', ['clean-styles'], function() {
         .pipe($.less())
 //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-        .pipe(gulp.dest(config.temp));
+        .pipe(gulp.dest(config.temp))
+        .pipe(browserSync.reload({stream:true}));
 });
 
 /**
