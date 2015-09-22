@@ -19,7 +19,7 @@
         };
 
         /* @ngInject */
-        function TopNavController($scope, $document, $state) {
+        function TopNavController($scope, $document, $state, $rootScope) {
             var vm = this;
 
             activate();
@@ -28,6 +28,7 @@
                 checkWithinIntro();
 
                 $document.on('scroll', checkWithinIntro);
+                $rootScope.$on('$viewContentLoaded', checkWithinIntro);
             }
 
             function checkWithinIntro() {
