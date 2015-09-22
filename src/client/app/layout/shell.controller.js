@@ -12,9 +12,7 @@
         vm.busyMessage = 'Please wait ...';
         vm.isBusy = true;
         $rootScope.showSplash = true;
-        vm.navline = {
-            inHeader: true,
-        };
+        vm.inHeader = true;
 
         activate();
 

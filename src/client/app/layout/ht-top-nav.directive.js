@@ -13,16 +13,14 @@
             controllerAs: 'vm',
             restrict: 'EA',
             scope: {
-                'navline': '='
+                'inHeader': '='
             },
             templateUrl: 'app/layout/ht-top-nav.html'
         };
 
         /* @ngInject */
-        function TopNavController($document, $element, $window, $state) {
+        function TopNavController($scope, $document, $state) {
             var vm = this;
-
-            vm.inHeader = true;
 
             activate();
 
@@ -39,7 +37,7 @@
 
                 vm.inHeader = $state.current.url === '/' && $document.scrollTop() <= triggerHeight;
 
-                console.log(vm.inHeader);
+                $scope.$applyAsync();
             }
         }
 
