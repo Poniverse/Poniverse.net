@@ -1,0 +1,31 @@
+<div tabindex="-1" role="dialog" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="login">
+                <i class="icon-poniverse"></i>
+                <h2>Sign in to <span>Poniverse</span></h2>
+
+                <div ng-repeat="error in errors" type="alert.type" close="closeError($index)" class="alert">
+                    <strong>Error!</strong> {{ error.message }}
+                </div>
+
+                <form method="POST" class="form-horizontal" action="" ng-submit="login()" accept-charset="UTF-8">
+                    <div class="form-group">
+                        <input id="username" class="form-control" type="text" maxlength="30" name="username" placeholder="username" ng-model="form.username">
+                        <input id="password" class="form-control" type="password" name="password" placeholder="password" ng-model="form.password">
+                        <label>
+                            <input type="checkbox" name="rememberme" value="1" ng-model="form.rememberme"> Remember Me
+                        </label>
+                    </div>
+                    <div class="links">
+                        <a href="/login/forgot">Forgot Password?</a> or <a href="/login/resendactivation">Resend activation email?</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn sign-up" ng-click="register()">register</a>
+                        <button type="submit" class="btn sign-in" ladda ng-model="loading" name="submit" data-style="slide-up" id="signin">sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
