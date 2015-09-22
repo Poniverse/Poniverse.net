@@ -33,7 +33,7 @@
             function checkWithinIntro() {
                 var aboutTopPosition = $document.find('#about').offset().top,
                     navbarHeight = $document.find('#pv-top-nav').height(),
-                    triggerHeight = aboutTopPosition - navbarHeight;
+                    triggerHeight = aboutTopPosition - navbarHeight - 1;
 
                 vm.inHeader = $state.current.url === '/' && $document.scrollTop() <= triggerHeight;
 
