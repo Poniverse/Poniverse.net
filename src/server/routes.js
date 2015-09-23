@@ -37,6 +37,7 @@ function postAuth(req, res, next) {
             return res.status(response.statusCode).send(body);
         }
 
+        // Credit: http://lollyrock.com/articles/nodejs-encryption/
         var cipher = crypto.createCipher('aes-256-cbc', process.env.APP_KEY);
         var crypted = cipher.update(body,'utf8','base64');
         crypted += cipher.final('base64');
