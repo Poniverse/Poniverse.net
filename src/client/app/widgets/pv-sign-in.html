@@ -9,12 +9,12 @@
                     <strong>Error!</strong> {{ error.message }}
                 </div>
 
-                <form method="POST" class="form-horizontal" action="" ng-submit="login()" accept-charset="UTF-8">
+                <form class="form-horizontal" ng-submit="vm.login() " accept-charset="UTF-8">
                     <div class="form-group">
-                        <input id="username" class="form-control" type="text" maxlength="30" name="username" placeholder="username" ng-model="form.username">
-                        <input id="password" class="form-control" type="password" name="password" placeholder="password" ng-model="form.password">
+                        <input id="username" class="form-control" type="text" maxlength="30" name="username" placeholder="username" ng-model="vm.username">
+                        <input id="password" class="form-control" type="password" name="password" placeholder="password" ng-model="vm.password">
                         <label>
-                            <input type="checkbox" name="rememberme" value="1" ng-model="form.rememberme"> Remember Me
+                            <input type="checkbox" name="rememberme" value="1" ng-model="vm.rememberme"> Remember Me
                         </label>
                     </div>
                     <div class="links">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="btn-group">
                         <a class="btn sign-up" ng-click="register()">register</a>
-                        <button type="submit" class="btn sign-in" ladda ng-model="loading" name="submit" data-style="slide-up" id="signin">sign In</button>
+                        <button type="submit" class="btn sign-in" name="submit" id="signin">sign In</button>
                     </div>
                 </form>
             </div>

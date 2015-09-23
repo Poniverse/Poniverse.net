@@ -5,6 +5,7 @@
         .module('app.core', [
             'ngAnimate', 'ngSanitize',
             'blocks.exception', 'blocks.logger', 'blocks.router',
-            'ui.router', 'ngplus', 'duScroll', 'mgcrea.ngStrap'
+            'ui.router', 'ngplus', 'duScroll', 'mgcrea.ngStrap',
+            'satellizer'
         ]);
 })();

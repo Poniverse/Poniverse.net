@@ -28,7 +28,8 @@
     "angular-animate": "~1.3.17",
     "angular-scroll": "~0.7.2",
     "angular-strap": "~2.3.2",
-    "angular-motion": "~0.4.2"
+    "angular-motion": "~0.4.2",
+    "satellizer": "~0.12.5"
   },
   "resolutions": {
     "angular": "1.3.19"

@@ -14,21 +14,24 @@
 
     var config = {
         appErrorPrefix: '[Poniverse Error] ',
-        appTitle: 'Poniverse'
+        appTitle: 'Poniverse',
+        apiUrl: 'https://api.poniverse.net',
+        authUrl: '/api/auth'
     };
 
     core.value('config', config);
 
     core.config(configure);
 
-    configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider'];
+    configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider', '$authProvider'];
     /* @ngInject */
-    function configure($logProvider, routerHelperProvider, exceptionHandlerProvider) {
+    function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, $authProvider) {
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);
         }
         exceptionHandlerProvider.configure(config.appErrorPrefix);
         routerHelperProvider.configure({docTitle: ' - ' +  config.appTitle});
+        $authProvider.loginUrl = config.authUrl;
     }
 
 })();
