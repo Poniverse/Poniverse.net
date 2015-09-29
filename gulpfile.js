@@ -1,3 +1,4 @@
+
 var args = require('yargs').argv;
 var browserSync = require('browser-sync');
 var config = require('./gulp.config')();
@@ -519,7 +520,7 @@ function startBrowserSync(isDev, specRunner) {
         logFileChanges: true,
         logLevel: 'info',
         logPrefix: 'pvn',
-        notify: true,
+        notify: false,
         reloadDelay: 0 //1000
     } ;
     if (specRunner) {
