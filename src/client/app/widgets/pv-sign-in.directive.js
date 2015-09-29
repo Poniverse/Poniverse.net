@@ -5,11 +5,11 @@
         .module('app.widgets')
         .directive('pvSignIn', pvSignIn);
 
-    pvSignIn.$inject = ['config', '$modal', '$auth'];
+    pvSignIn.$inject = ['config', '$modal', '$auth', 'coreevents', '$rootScope'];
     /* @ngInject */
-    function pvSignIn (config, $modal, $auth) {
+    function pvSignIn (config, $modal, $auth, coreevents, $rootScope) {
         //Usage:
-        //<a href ht-img-person="{{person.imageSource}}"/>
+        //<button class="button" pv-sign-in>Sign In</buttton>
         var directive = {
             link: link,
             restrict: 'A'
@@ -30,7 +30,7 @@
             }
         }
 
-        function LoginController() {
+        function LoginController($scope) {
             var vm = this;
 
             vm.login = login;
@@ -41,11 +41,12 @@
                     password: vm.password
                 };
 
-                console.log(credentials);
-
                 $auth.login(credentials).then(function (data) {
-                    console.log('Success!');
-                    console.log(data);
+                    console.log('Broadcasting success!');
+
+                    $rootScope.$broadcast(coreevents.loginSuccess, data.data.user);
+
+                    $scope.$hide();
                 }, function (data) {
                     console.log('Failure!');
                     console.log(data);

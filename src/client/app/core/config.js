@@ -32,6 +32,7 @@
         exceptionHandlerProvider.configure(config.appErrorPrefix);
         routerHelperProvider.configure({docTitle: ' - ' +  config.appTitle});
         $authProvider.loginUrl = config.authUrl;
+        $authProvider.tokenName = 'access_token';
     }
 
 })();

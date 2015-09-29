@@ -1,17 +1,17 @@
-<nav ng-class="{'in-header': vm.inHeader }" id="pv-top-nav">
+<nav ng-class="{'in-header': vm.inHeader}" id="pv-top-nav">
     <div class="container">
-        <a href="/" class="logo"><i class="icon-poniverse"></i></a>
-        <!--<menu ng-show="vm.user">
+        <a ui-sref="home" class="logo"><i class="icon-poniverse"></i></a>
+        <menu ng-show="vm.user">
             <li>
                 <ul>
-                    <li class="display-name">{{ vm.user.display_name }}</li>
+                    <li class="display-name">{{ vm.user.data.attributes.display_name }}</li>
                     <li><a href="/account">Preferences</a></li>
-                    <li><a href="" ng-click="vm.logout()"><i class="icon-off"></i> Logout</a></li>
+                    <li><a href pv-log-out><i class="icon-off"></i> Logout</a></li>
                 </ul>
             </li>
-        </menu>-->
-        <menu>
-            <li ><a class="sign-up">register</a></li>
+        </menu>
+        <menu ng-hide="vm.user">
+            <li><a class="sign-up">register</a></li>
             <li><a class="button button-account" pv-sign-in>sign in</a></li>
         </menu>
     </div>

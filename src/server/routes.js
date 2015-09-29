@@ -12,6 +12,7 @@ var vault = cookiee(process.env.APP_KEY, {
 });
 
 router.post('/auth', postAuth);
+router.get('/clearauth', postClearAuth);
 router.get('/me', getMe);
 router.get('/*', four0four.notFoundMiddleware);
 
@@ -19,6 +20,7 @@ module.exports = router;
 
 //////////////
 
+// TODO: Add a CSRF Token to this endpoint to discourage direct API consumption here
 function postAuth(req, res, next) {
     var form = {
         grant_type: 'password',
@@ -29,6 +31,11 @@ function postAuth(req, res, next) {
         scope: 'basic'
     };
 
+    /**
+     * If you are looking at this for an authorisation implementation eample,
+     * then do not use this endpoint. This is only intended for the SPA on
+     * Poniverse.net and not a generic endpoint for anypony to use.
+     */
     request.post({
         url: process.env.PONIVERSE_API_URL + '/oauth/access_token',
         form: form
@@ -37,21 +44,31 @@ function postAuth(req, res, next) {
             return res.status(response.statusCode).send(body);
         }
 
-        // Credit: http://lollyrock.com/articles/nodejs-encryption/
-        var cipher = crypto.createCipher('aes-256-cbc', process.env.APP_KEY);
-        var crypted = cipher.update(body,'utf8','base64');
-        crypted += cipher.final('base64');
-
-        res.cookie('oauth-secrets', crypted, {maxAge: 900000, httpOnly: true});
+        vault.write(req, body);
 
         var oauth = JSON.parse(body);
 
-        var authResponse = {
-            token: oauth.access_token
-        };
+        request.get({
+            url: process.env.PONIVERSE_API_URL + '/users/me',
+            headers: {
+                'Authorization': 'Bearer ' + oauth.access_token,
+                'Content-Type': 'application/vnd.api+json'
+            }
+        }, function(err, resp, reqBody) {
+            var authResponse = {
+                access_token: oauth.access_token,
+                user: JSON.parse(reqBody)
+            };
 
-        res.status(response.statusCode).send(authResponse);
+            res.status(resp.statusCode).send(authResponse);
+        });
     });
+}
+
+function postClearAuth(req, res, next) {
+    res.cookie('oauth-secrets', '', {maxAge: -1, httpOnly: true});
+
+    res.status(204).send();
 }
 
 function getMe(req, res, next) {
@@ -64,7 +81,7 @@ function getMe(req, res, next) {
     var oauth = JSON.parse(body);
 
     var response = {
-        token: oauth.access_token
+        access_token: oauth.access_token
     };
 
     res.status(200).send(response);

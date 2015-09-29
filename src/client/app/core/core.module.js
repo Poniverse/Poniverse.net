@@ -6,6 +6,6 @@
             'ngAnimate', 'ngSanitize',
             'blocks.exception', 'blocks.logger', 'blocks.router',
             'ui.router', 'ngplus', 'duScroll', 'mgcrea.ngStrap',
-            'satellizer'
+            'satellizer', 'ngStorage'
         ]);
 })();
