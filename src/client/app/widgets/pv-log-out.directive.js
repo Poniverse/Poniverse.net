@@ -19,8 +19,15 @@
             element.bind('click', logout);
 
             function logout() {
+                // Broadcasts the logout event.
                 $rootScope.$broadcast(coreevents.logoutSuccess);
+
+                // Removes the access token from localStorage.
                 $auth.logout();
+
+                // Makes a call to the server to remove the
+                // cookie from storage.
+                $auth.unlink();
             }
         }
 

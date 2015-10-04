@@ -15,8 +15,7 @@
     var config = {
         appErrorPrefix: '[Poniverse Error] ',
         appTitle: 'Poniverse',
-        apiUrl: 'https://api.poniverse.net',
-        authUrl: '/api/auth'
+        apiUrl: 'https://api.poniverse.net'
     };
 
     core.value('config', config);
@@ -31,7 +30,8 @@
         }
         exceptionHandlerProvider.configure(config.appErrorPrefix);
         routerHelperProvider.configure({docTitle: ' - ' +  config.appTitle});
-        $authProvider.loginUrl = config.authUrl;
+        $authProvider.loginUrl = '/api/auth';
+        $authProvider.unlinkUrl = '/api/clearauth';
         $authProvider.tokenName = 'access_token';
     }
 
