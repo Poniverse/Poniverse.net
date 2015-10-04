@@ -12,7 +12,7 @@ var vault = cookiee(process.env.APP_KEY, {
 });
 
 router.post('/auth', postAuth);
-router.get('/clearauth', postClearAuth);
+router.post('/clearauth', postClearAuth);
 router.get('/me', getMe);
 router.get('/*', four0four.notFoundMiddleware);
 
@@ -49,10 +49,10 @@ function postAuth(req, res, next) {
         var oauth = JSON.parse(body);
 
         request.get({
-            url: process.env.PONIVERSE_API_URL + '/users/me',
+            url: process.env.PONIVERSE_API_URL + '/user',
             headers: {
-                'Authorization': 'Bearer ' + oauth.access_token,
-                'Content-Type': 'application/vnd.api+json'
+                'Accept': 'application/vnd.api+json,application/vnd.poniverse.api.v2+json',
+                'Authorization': 'Bearer ' + oauth.access_token
             }
         }, function(err, resp, reqBody) {
             var authResponse = {
