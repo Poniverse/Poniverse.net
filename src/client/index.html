@@ -59,9 +59,9 @@
 
     <!-- build:css styles/lib.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
-    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="/bower_components/angular-motion/dist/angular-motion.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -78,32 +78,41 @@
 
     <!-- build:js js/lib.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/extras.angular.plus/ngplus-overlay.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/toastr/toastr.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-scroll/angular-scroll.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
-    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="bower_components/satellizer/satellizer.js"></script>
-    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/toastr/toastr.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-scroll/angular-scroll.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="/bower_components/satellizer/satellizer.js"></script>
+    <script src="/bower_components/ngstorage/ngStorage.js"></script>
+    <script src="/bower_components/angular-uuid4/angular-uuid4.js"></script>
+    <script src="/bower_components/pluralize/pluralize.js"></script>
+    <script src="/bower_components/validate/validate.js"></script>
+    <script src="/bower_components/parse/parse.min.js"></script>
+    <script src="/bower_components/angular-jsonapi/dist/angular-jsonapi.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
+    <script src="/src/client/app/account/account.module.js"></script>
     <script src="/src/client/app/blocks/exception/exception.module.js"></script>
     <script src="/src/client/app/blocks/logger/logger.module.js"></script>
     <script src="/src/client/app/blocks/router/router.module.js"></script>
     <script src="/src/client/app/content/content.module.js"></script>
     <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/layout/layout.module.js"></script>
+    <script src="/src/client/app/resources/resources.module.js"></script>
     <script src="/src/client/app/widgets/widgets.module.js"></script>
+    <script src="/src/client/app/account/account.controller.js"></script>
+    <script src="/src/client/app/account/account.route.js"></script>
     <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
     <script src="/src/client/app/blocks/exception/exception.js"></script>
     <script src="/src/client/app/blocks/logger/logger.js"></script>
@@ -114,11 +123,11 @@
     <script src="/src/client/app/core/constants.js"></script>
     <script src="/src/client/app/core/core.events.js"></script>
     <script src="/src/client/app/core/core.route.js"></script>
-    <script src="/src/client/app/core/dataservice.js"></script>
     <script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
     <script src="/src/client/app/layout/pv-bottom-footer.directive.js"></script>
     <script src="/src/client/app/layout/pv-top-nav.directive.js"></script>
     <script src="/src/client/app/layout/shell.controller.js"></script>
+    <script src="/src/client/app/resources/users.factory.js"></script>
     <script src="/src/client/app/widgets/pv-log-out.directive.js"></script>
     <script src="/src/client/app/widgets/pv-sign-in.directive.js"></script>
     <!-- endinject -->

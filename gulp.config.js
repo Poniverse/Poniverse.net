@@ -11,7 +11,7 @@ module.exports = function() {
     var bower = {
         json: require('./bower.json'),
         directory: 'bower_components/',
-        ignorePath: '../../'
+        ignorePath: '../..'
     };
     var nodeModules = 'node_modules';
 

@@ -3,9 +3,19 @@
 
     angular
         .module('app.core', [
-            'ngAnimate', 'ngSanitize',
-            'blocks.exception', 'blocks.logger', 'blocks.router',
-            'ui.router', 'ngplus', 'duScroll', 'mgcrea.ngStrap',
-            'satellizer', 'ngStorage'
+            'ui.router',
+            'angular-jsonapi',
+            'angular-jsonapi-rest',
+            'angular-jsonapi-local',
+            'blocks.exception',
+            'blocks.logger',
+            'blocks.router',
+            'duScroll',
+            'mgcrea.ngStrap',
+            'ngAnimate',
+            'ngplus',
+            'ngSanitize',
+            'ngStorage',
+            'satellizer'
         ]);
 })();

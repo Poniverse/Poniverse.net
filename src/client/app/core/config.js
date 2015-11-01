@@ -5,8 +5,6 @@
 
     core.config(toastrConfig);
 
-    toastrConfig.$inject = ['toastr'];
-    /* @ngInject */
     function toastrConfig(toastr) {
         toastr.options.timeOut = 4000;
         toastr.options.positionClass = 'toast-bottom-right';
@@ -15,15 +13,13 @@
     var config = {
         appErrorPrefix: '[Poniverse Error] ',
         appTitle: 'Poniverse',
-        apiUrl: 'https://api.poniverse.net'
+        apiUrl: 'http://api.poniverse.local'
     };
 
     core.value('config', config);
 
     core.config(configure);
 
-    configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider', '$authProvider'];
-    /* @ngInject */
     function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, $authProvider) {
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);

@@ -9,6 +9,5 @@
     /* @ngInject */
     function ContentController($q, logger) {
         var vm = this;
-        vm.title = 'Home';
     }
 })();
