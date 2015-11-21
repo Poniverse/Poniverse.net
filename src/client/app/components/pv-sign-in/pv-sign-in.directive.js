@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.widgets')
+        .module('app.components')
         .directive('pvSignIn', pvSignIn);
 
     pvSignIn.$inject = ['config', '$modal', '$auth', 'coreevents', '$rootScope'];
