@@ -9,7 +9,7 @@
                     <strong>Error!</strong> {{ error.message }}
                 </div>
 
-                <form class="form-horizontal" ng-submit="vm.login() " accept-charset="UTF-8">
+                <form class="form-horizontal" ng-submit="vm.login()" accept-charset="UTF-8">
                     <div class="form-group">
                         <input id="username" class="form-control" type="text" maxlength="30" name="username" placeholder="username" ng-model="vm.username">
                         <input id="password" class="form-control" type="password" name="password" placeholder="password" ng-model="vm.password">
@@ -21,7 +21,7 @@
                         <a href="/login/forgot">Forgot Password?</a> or <a href="/login/resendactivation">Resend activation email?</a>
                     </div>
                     <div class="btn-group">
-                        <a class="btn sign-up" ng-click="register()">register</a>
+                        <a class="btn sign-up">register</a>
                         <button type="submit" class="btn sign-in" name="submit" id="signin">sign In</button>
                     </div>
                 </form>

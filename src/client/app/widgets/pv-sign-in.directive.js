@@ -9,7 +9,7 @@
     /* @ngInject */
     function pvSignIn (config, $modal, $auth, coreevents, $rootScope) {
         //Usage:
-        //<button class="button" pv-sign-in>Sign In</buttton>
+        //<button class="button" pv-sign-in>Sign In</button>
         var directive = {
             link: link,
             restrict: 'A'
