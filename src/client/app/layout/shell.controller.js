@@ -34,14 +34,7 @@
         }
 
         function setCurrentUser(event, user) {
-            vm.currentUser = Users.initialize();
-            vm.currentUser.new = false;
-            vm.currentUser.stable = true;
-            vm.currentUser.synchronized = true;
-            vm.currentUser.data = user.data;
-
-            vm.currentUser.refresh();
-
+            vm.currentUser = Users.get(user.data.id);
             $sessionStorage.user = user;
         }
 
