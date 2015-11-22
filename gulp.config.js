@@ -27,10 +27,13 @@ module.exports = function() {
         build: './build/',
         client: client,
         css: temp + 'poniverse.css',
-        fonts: bower.directory + 'font-awesome/fonts/**/*.*',
+        fonts: [
+            bower.directory + 'font-awesome/fonts/**/*.*',
+            client + 'fonts/*.*'
+        ],
         html: client + '**/*.html',
         htmltemplates: clientApp + '**/*.html',
-        images: client + 'images/**/*.*',
+        images: client + 'img/**/*.*',
         index: client + 'index.html',
         // app js, with no specs
         js: [
