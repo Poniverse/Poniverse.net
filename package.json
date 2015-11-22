@@ -1,7 +1,8 @@
 {
   "name": "Poniverse.net",
   "description": "The frontend to Poniverse.net",
-  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "init": "npm install",

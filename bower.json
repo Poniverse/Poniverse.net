@@ -2,6 +2,7 @@
   "name": "Poniverse.net",
   "version": "0.0.1",
   "description": "The frontend for poniverse.net",
+  "license": "Apache-2.0",
   "authors": [],
   "private": true,
   "ignore": [

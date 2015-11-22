@@ -1,4 +1,6 @@
-# Poniverse.net
+[![Poniverse Logo](https://poniverse.net/img/logo.svg)](https://poniverse.net)
+
+Frontend for the Poniverse website 
 
 ## Prerequisites
 
@@ -12,7 +14,7 @@
     npm install -g bower gulp nodemon
     ```
 
-    >Refer to these [instructions on how to not require sudo](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
+    > Refer to these [instructions on how to not require sudo](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md)
 
 ## Running Poniverse.net
 
@@ -251,7 +253,3 @@ The `blocks.router` module contains a routing helper module that assists in addi
     --type=major
     --type=pre
     --ver=1.2.3 // specific version
-
-## License
-
-Poniverse.net's source code is closed-source and under a proprietary license. No usage, distribution, or modification of the code is permitted without Peter Deltchev's (Feld0) personal written permission.
