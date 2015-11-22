@@ -5,9 +5,15 @@
         .module('app.layout')
         .controller('ShellController', ShellController);
 
-    ShellController.$inject = ['$rootScope', '$scope', '$timeout', 'config', 'logger', '$document', '$state', 'coreevents', '$sessionStorage', 'Users'];
-    /* @ngInject */
-    function ShellController($rootScope, $scope, $timeout, config, logger, $document, $state, coreevents, $sessionStorage, Users) {
+    function ShellController(
+        $rootScope,
+        $scope,
+        config,
+        logger,
+        coreevents,
+        $sessionStorage,
+        Users
+    ) {
         var vm = this;
         vm.busyMessage = 'Please wait ...';
         vm.isBusy = true;
@@ -22,8 +28,6 @@
             if ($sessionStorage.user) {
                 setCurrentUser(null, $sessionStorage.user);
             }
-
-            console.log(vm.currentUser);
 
             $rootScope.$on(coreevents.loginSuccess, setCurrentUser);
             $rootScope.$on(coreevents.logoutSuccess, unsetCurrentUser);

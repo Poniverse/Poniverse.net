@@ -20,7 +20,12 @@
 
     core.config(configure);
 
-    function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, $authProvider) {
+    function configure(
+        $logProvider,
+        routerHelperProvider,
+        exceptionHandlerProvider,
+        $authProvider
+    ) {
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);
         }

@@ -1,14 +1,23 @@
 /* jshint -W117, -W030 */
 describe('ShellController', function() {
-    var controller;
+    var controller, scope;
 
     beforeEach(function() {
         bard.appModule('app.layout');
-        bard.inject('$controller', '$q', '$rootScope', '$timeout');
+        bard.inject(
+            '$controller',
+            '$rootScope',
+            'config',
+            'logger',
+            'coreevents',
+            '$sessionStorage',
+            'Users'
+        );
     });
 
     beforeEach(function () {
-        controller = $controller('ShellController');
+        scope = $rootScope.$new();
+        controller = $controller('ShellController', {$scope: scope});
         $rootScope.$apply();
     });
 
@@ -17,10 +26,6 @@ describe('ShellController', function() {
     describe('Shell controller', function() {
         it('should be created successfully', function () {
             expect(controller).to.be.defined;
-        });
-
-        it('should show splash screen', function () {
-            expect($rootScope.showSplash).to.be.true;
         });
     });
 });

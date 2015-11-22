@@ -38,7 +38,7 @@
                 if ($state.current.name !== 'home') {
                     // Prevent overzealous scope updates by only updating
                     // when in-header is true.
-                    if (vm.inHeader == true) {
+                    if (vm.inHeader === true) {
                         vm.inHeader = false;
                         $scope.$applyAsync();
                     }

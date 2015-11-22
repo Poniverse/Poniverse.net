@@ -54,6 +54,15 @@
     <script src="/bower_components/toastr/toastr.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-scroll/angular-scroll.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="/bower_components/satellizer/satellizer.js"></script>
+    <script src="/bower_components/ngstorage/ngStorage.js"></script>
+    <script src="/bower_components/angular-uuid4/angular-uuid4.js"></script>
+    <script src="/bower_components/pluralize/pluralize.js"></script>
+    <script src="/bower_components/validate/validate.js"></script>
+    <script src="/bower_components/parse/parse.min.js"></script>
+    <script src="/bower_components/angular-jsonapi/dist/angular-jsonapi.js"></script>
     <script src="/bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="/bower_components/sinon/index.js"></script>
     <script src="/bower_components/bardjs/dist/bard.js"></script>
@@ -62,29 +71,34 @@
 
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
+    <script src="/src/client/app/account/account.module.js"></script>
     <script src="/src/client/app/blocks/exception/exception.module.js"></script>
     <script src="/src/client/app/blocks/logger/logger.module.js"></script>
     <script src="/src/client/app/blocks/router/router.module.js"></script>
+    <script src="/src/client/app/components/components.module.js"></script>
     <script src="/src/client/app/content/content.module.js"></script>
     <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/layout/layout.module.js"></script>
-    <script src="/src/client/app/components/widgets.module.js"></script>
+    <script src="/src/client/app/resources/resources.module.js"></script>
+    <script src="/src/client/app/account/account.controller.js"></script>
+    <script src="/src/client/app/account/account.route.js"></script>
     <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
     <script src="/src/client/app/blocks/exception/exception.js"></script>
     <script src="/src/client/app/blocks/logger/logger.js"></script>
     <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+    <script src="/src/client/app/components/pv-log-out/pv-log-out.directive.js"></script>
+    <script src="/src/client/app/components/pv-sign-in/pv-sign-in.directive.js"></script>
     <script src="/src/client/app/content/content.controller.js"></script>
     <script src="/src/client/app/content/content.route.js"></script>
     <script src="/src/client/app/core/config.js"></script>
     <script src="/src/client/app/core/constants.js"></script>
+    <script src="/src/client/app/core/core.events.js"></script>
     <script src="/src/client/app/core/core.route.js"></script>
-    <script src="/src/client/app/core/dataservice.js"></script>
     <script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
+    <script src="/src/client/app/layout/pv-bottom-footer.directive.js"></script>
     <script src="/src/client/app/layout/pv-top-nav.directive.js"></script>
     <script src="/src/client/app/layout/shell.controller.js"></script>
-    <script src="/src/client/app/layout/sidebar.controller.js"></script>
-    <script src="/src/client/app/components/ht-img-person.directive.js"></script>
-    <script src="/src/client/app/components/ht-widget-header.directive.js"></script>
+    <script src="/src/client/app/resources/users.factory.js"></script>
     <!-- endinject -->
 
     <!-- inject:spechelpers:js -->
@@ -99,7 +113,6 @@
     <script src="/src/client/app/core/core.route.spec.js"></script>
     <script src="/src/client/app/layout/ht-sidebar.directive.spec.js"></script>
     <script src="/src/client/app/layout/shell.controller.spec.js"></script>
-    <script src="/src/client/app/layout/sidebar.controller.spec.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->

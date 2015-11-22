@@ -74,7 +74,7 @@ function postClearAuth(req, res, next) {
 function getMe(req, res, next) {
     var body = vault.read(req);
 
-    if (! body) {
+    if (!body) {
         res.status(401).send();
     }
 

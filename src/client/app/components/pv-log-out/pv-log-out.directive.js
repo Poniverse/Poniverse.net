@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.˚')
+        .module('app.components')
         .directive('pvLogOut', pvLogOut);
 
     pvLogOut.$inject = ['config', '$modal', '$auth', 'coreevents', '$rootScope'];
