@@ -7,9 +7,7 @@
 
     function AccountController($q, logger, Users, $scope) {
         var vm = this;
-        vm.title = 'Preferences';
-
-        vm.user = angular.copy($scope.vm.currentUser);
+        vm.user = $scope.vm.currentUser;
 
         vm.update = update;
 
@@ -21,7 +19,6 @@
             function success() {
                 console.log('Success!');
                 console.log(arguments);
-                $scope.vm.currentUser = angular.copy(vm.user);
             }
 
             function failure(err) {

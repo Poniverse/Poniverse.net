@@ -29,7 +29,7 @@
                 config: {
                     url: '',
                     templateUrl: 'app/account/settings.html',
-                    title: 'Settings'
+                    title: 'Account Settings'
                 }
             },
         ];

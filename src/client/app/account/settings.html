@@ -2,19 +2,19 @@
     <div class="form-group">
         <label class="col-lg-3 control-label">Username</label>
         <div class="col-lg-9">
-            <input class="form-control" type="text" placeholder="{{ vm.user.data.attributes.username }}" disabled>
+            <input class="form-control" type="text" placeholder="{{ vm.user.form.data.attributes.username }}" disabled>
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-3 control-label" for="display_name">Display Name</label>
         <div class="col-lg-9">
-            <input type="text" class="form-control" id="display_name" name="display_name" maxlength="20" ng-model="vm.user.data.attributes.display_name" />
+            <input type="text" class="form-control" id="display_name" name="display_name" maxlength="20" ng-model="vm.user.form.data.attributes.display_name" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-3 control-label" for="email">Email</label>
         <div class="col-lg-9">
-            <input type="text" class="form-control" id="email" name="email" ng-model="vm.user.data.attributes.email">
+            <input type="text" class="form-control" id="email" name="email" ng-model="vm.user.form.data.attributes.email">
         </div>
     </div>
     <div class="form-group">
@@ -24,7 +24,7 @@
     </div>
 </form>
 
-<div ng-if="user.new_email">
+<div ng-if="vm.user.data.attributes.new_email">
     <h2>Email Confirmation</h2>
     <p>You have a pending email address change to <strong>{{ user.new_email }}</strong>. Click the link sent to you in the confirmation email in order to change your email address.</p>
     <form class="form-horizontal">
