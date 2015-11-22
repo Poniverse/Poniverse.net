@@ -2,7 +2,6 @@ var router = require('express').Router();
 var four0four = require('./utils/404')();
 var data = require('./data');
 var request = require('request');
-var crypto = require('crypto');
 var cookiee = require('cookie-encryption');
 var vault = cookiee(process.env.APP_KEY, {
     cipher: 'aes-256-cbc',
@@ -13,6 +12,7 @@ var vault = cookiee(process.env.APP_KEY, {
 
 router.post('/auth', postAuth);
 router.post('/clearauth', postClearAuth);
+router.post('/refresh-token', postRefreshToken);
 router.get('/me', getMe);
 router.get('/*', four0four.notFoundMiddleware);
 
@@ -32,7 +32,7 @@ function postAuth(req, res, next) {
     };
 
     /**
-     * If you are looking at this for an authorisation implementation eample,
+     * If you are looking at this for an authorisation implementation example,
      * then do not use this endpoint. This is only intended for the SPA on
      * Poniverse.net and not a generic endpoint for anypony to use.
      */
@@ -62,6 +62,48 @@ function postAuth(req, res, next) {
 
             res.status(resp.statusCode).send(authResponse);
         });
+    });
+}
+
+function postRefreshToken(req, res, next) {
+    var body = vault.read(req);
+
+    if (!body) {
+        res.status(401).send();
+    }
+
+    var oauth = JSON.parse(body);
+
+    var form = {
+        grant_type: 'refresh_token',
+        client_id: process.env.PONIVERSE_CLIENT_ID,
+        client_secret: process.env.PONIVERSE_CLIENT_SECRET,
+        refresh_token: oauth.refresh_token
+    };
+
+    request.post({
+        url: process.env.PONIVERSE_API_URL + '/oauth/access_token',
+        form: form
+    }, function(error, response, body) {
+        if (response.statusCode === 401) {
+            return res.status(response.statusCode).send(body);
+        }
+
+        var oauthResponse = JSON.parse(body);
+
+        console.log(oauth, oauthResponse);
+
+        if (typeof oauthResponse.error !== 'undefined') {
+            return res.status(response.statusCode).send(oauthResponse);
+        }
+
+        vault.write(req, JSON.stringify(oauthResponse));
+
+        var authResponse = {
+            access_token: oauthResponse.access_token
+        };
+
+        res.status(response.statusCode).send(authResponse);
     });
 }
 
