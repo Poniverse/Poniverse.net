@@ -30,8 +30,8 @@
     <form class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-9">
-                <button id="resend_button" ng-click="updateReconfirmation('resend')" ladda="loadingEmailResend" ng-model="loadingEmailResend" ng-disabled="loadingEmailCancel" type="submit" name="resend_button" class="ladda-button btn btn-primary" data-style="expand-right">Resend Confirmation Email</button>
-                <button id="cancel_button" ng-click="updateReconfirmation('cancel')" ladda="loadingEmailCancel" ng-model="loadingEmailCancel" ng-disabled="loadingEmailResend" type="submit" name="cancel_button" class="ladda-button btn btn-danger" data-style="expand-right">Cancel</button>
+                <button id="resend_button" ng-click="updateReconfirmation('resend')" ng-disabled="loadingEmailCancel" type="submit" name="resend_button" class="btn btn-primary">Resend Confirmation Email</button>
+                <button id="cancel_button" ng-click="updateReconfirmation('cancel')" ng-disabled="loadingEmailResend" type="submit" name="cancel_button" class="btn btn-danger">Cancel</button>
             </div>
         </div>
     </form>

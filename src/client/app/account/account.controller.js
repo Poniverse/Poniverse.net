@@ -25,8 +25,6 @@
                 console.log('Failure!');
                 console.log(err);
             }
-
-            //$scope.vm.currentUser = angular.copy(vm.user);
         }
     }
 })();
