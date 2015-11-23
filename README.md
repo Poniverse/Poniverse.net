@@ -56,28 +56,6 @@ When you install the project you should run these commands, but if you notice mi
 ### The Modules
 The app has 4 feature modules and depends on a series of external modules and custom but cross-app modules
 
-```
-app --> [
-        app.content --> [
-            app.core,
-            app.widgets
-        ],
-        app.layout --> [
-            app.core
-        ],
-        app.widgets,
-		app.core --> [
-			ngAnimate,
-			ngSanitize,
-			ui.router,
-			blocks.exception,
-			blocks.logger,
-			blocks.router
-			duScroll
-		]
-    ]
-```
-
 #### core Module
 Core modules are ones that are shared throughout the entire application and may be customized for the specific application. Example might be common data services.
 
@@ -93,6 +71,9 @@ The `blocks.logger` module handles logging across the Angular app.
 The `blocks.exception` module handles exceptions across the Angular app.
 
 It depends on the `blocks.logger` module, because the implementation logs the exceptions.
+
+##### blocks.recover-session Module
+The `blocks.exception` module handles failed authentication requests and attempts to fulfill them by refreshing the access token or asking the user to log-in again.
 
 ##### blocks.router Module
 The `blocks.router` module contains a routing helper module that assists in adding routes to the $routeProvider.
