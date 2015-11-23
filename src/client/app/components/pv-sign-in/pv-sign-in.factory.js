@@ -3,9 +3,9 @@
 
     angular
         .module('app.components')
-        .factory('SignIn', SignIn);
+        .factory('PvSignIn', PvSignIn);
 
-    function SignIn($modal, $auth, $rootScope) {
+    function PvSignIn($modal, $auth, $rootScope) {
         var factory = {
             show: show
         };

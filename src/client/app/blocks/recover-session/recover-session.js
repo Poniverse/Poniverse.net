@@ -21,7 +21,7 @@
         return factory;
 
         function error(response) {
-            var deferred, $http, $auth, SignIn;
+            var deferred, $http, $auth, PvSignIn;
 
             // We're only dealing with with 401's and ignoring login auth failures
             if (response.status !== 401 || response.config.url === config.loginUrl) {
@@ -31,7 +31,7 @@
             deferred = $q.defer();
             $http = $injector.get('$http');
             $auth = $injector.get('$auth');
-            SignIn = $injector.get('SignIn');
+            PvSignIn = $injector.get('PvSignIn');
 
             $http.post('/api/refresh-token').then(deferred.resolve, deferred.reject);
 
@@ -46,7 +46,7 @@
             function refreshFailure() {
                 var defer = $q.defer();
 
-                SignIn.show();
+                PvSignIn.show();
 
                 $rootScope.$on(coreevents.loginSuccess, defer.resolve);
 

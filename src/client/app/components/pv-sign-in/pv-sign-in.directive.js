@@ -5,7 +5,7 @@
         .module('app.components')
         .directive('pvSignIn', pvSignIn);
 
-    function pvSignIn (SignIn) {
+    function pvSignIn (PvSignIn) {
         //Usage:
         //<button class="button" pv-sign-in>Sign In</button>
         var directive = {
@@ -17,7 +17,7 @@
             element.bind('click', openModal);
 
             function openModal() {
-                SignIn.show();
+                PvSignIn.show();
             }
         }
 
