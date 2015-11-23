@@ -48,9 +48,14 @@
 
                 SignIn.show();
 
-                $rootScope.$on(coreevents.loginSuccess, loginSuccess);
+                $rootScope.$on(coreevents.loginSuccess, defer.resolve);
 
-                return defer.promise.then(loginSuccess, defer.reject);
+                // TODO: There should probably be some logic here to timeout the login box
+                // otherwise it would be possible to login like 5 hours after an initial
+                // request and have, lets say, a user update take place. Though
+                // the risk of that is quite small.
+
+                return defer.promise.then(loginSuccess);
             }
 
             function loginSuccess() {
