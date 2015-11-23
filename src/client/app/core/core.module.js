@@ -10,6 +10,7 @@
             'blocks.exception',
             'blocks.logger',
             'blocks.router',
+            'blocks.recover-session',
             'duScroll',
             'mgcrea.ngStrap',
             'ngAnimate',
