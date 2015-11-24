@@ -66,10 +66,17 @@ function postAuth(req, res, next) {
 }
 
 function postRefreshToken(req, res, next) {
-    var body = vault.read(req);
+    var body;
+
+    try {
+        body = vault.read(req);
+    } catch (e) {
+        // Invalid cookie ciphertext
+        // Ignore and handle below
+    }
 
     if (!body) {
-        res.status(401).send();
+        return res.status(401).send();
     }
 
     var oauth = JSON.parse(body);
@@ -114,7 +121,11 @@ function postClearAuth(req, res, next) {
 }
 
 function getMe(req, res, next) {
-    var body = vault.read(req);
+    var body;
+
+    try {
+        body = vault.read(req);
+    } catch (e) {} // See refresh-cookie
 
     if (!body) {
         res.status(401).send();
