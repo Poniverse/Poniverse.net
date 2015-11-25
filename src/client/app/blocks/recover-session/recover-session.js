@@ -21,10 +21,15 @@
         return factory;
 
         function error(response) {
-            var deferred, $http, $auth, PvSignIn;
+            var deferred, $http, $auth, PvSignIn, ignoredUrls;
+
+            ignoredUrls = [
+                config.loginUrl,
+                '/api/refresh-token'
+            ];
 
             // We're only dealing with with 401's and ignoring login auth failures
-            if (response.status !== 401 || response.config.url === config.loginUrl) {
+            if (response.status !== 401 || ignoredUrls.indexOf(response.config.url) !== -1) {
                 return $q.reject(response);
             }
 
@@ -49,6 +54,7 @@
                 PvSignIn.show();
 
                 $rootScope.$on(coreevents.loginSuccess, defer.resolve);
+                $rootScope.$on(coreevents.loginFailed, defer.reject);
 
                 // TODO: There should probably be some logic here to timeout the login box
                 // otherwise it would be possible to login like 5 hours after an initial
