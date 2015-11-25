@@ -32,6 +32,14 @@
                     title: 'Account Settings'
                 }
             },
+            {
+                state: 'account.change-password',
+                config: {
+                    url: '/password',
+                    templateUrl: 'app/account/change-password.html',
+                    title: 'Change Password'
+                }
+            },
         ];
     }
 })();
