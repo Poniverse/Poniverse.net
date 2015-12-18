@@ -337,6 +337,7 @@ pre {
 .button-music, .button-ponyfm { .button; .button-outline(@ponyfm,@white) }
 .button-videos, .button-equestriatv { .button; .button-outline(@equestriatv,@white) }
 .button-gaming, .button-poniarcade { .button; .button-outline(@poniarcade,@white) }
+.button-pvl, .button-ponyvillelive { .button; .button-outline(@dblue,@white) }
 .button-roleplay, .button-ponyroleplay { .button; .button-outline(@ponyroleplay,@white); &:hover { color: @ponyroleplay; } }
 .button-movie { .button; .button-outline(@blue,@white) }
 
@@ -345,6 +346,7 @@ pre {
 .text-music, .text-ponyfm { color:@ponyfm; }
 .text-videos, .text-equestriatv { color:@equestriatv; }
 .text-gaming, .text-poniarcade { color:@poniarcade; }
+.text-pvl, .text-ponyvillelive { color: @dblue; }
 .text-roleplay, .text-ponyroleplay { color:@ponyroleplay; }
 .text-movie { color:@blue; }
 
@@ -725,7 +727,7 @@ section#intro {
   }
 }
 
-// equestriatv
+// poniarcade
 #poniarcade {
   color: @poniarcade;
   // color: white;
@@ -739,6 +741,24 @@ section#intro {
       background-image: url(/img/ponies/pa_pony.svg);
       background-repeat: no-repeat;
       background-position: left bottom;
+    }
+  }
+}
+
+// ponyvillelive
+#ponyvillelive {
+  color: @ponyvillelive;
+  // color: white;
+  .button {
+    .button-outline(@ponyvillelive, @white);
+  }
+
+  @media (min-width: @grid-float-breakpoint) {
+    .container {
+      background-size: 525px auto;
+      background-image: url(/img/ponies/pvl_pony.svg);
+      background-repeat: no-repeat;
+      background-position: right bottom;
     }
   }
 }
@@ -877,11 +897,6 @@ section#intro {
 }
 
 // Sponsors Sections
-.ponyvillelive, #ponyvillelive {
-  a.button {
-    .button-outline(@ponyvillelive, white);
-  }
-}
 .bronycan, #bronycan {
   a.button {
     .button-outline(@bronycan, white);
@@ -903,15 +918,15 @@ section#intro {
   }
 }
 
-.writerinharmony, #writersinharmony {
+.buck, #buck {
   a.button {
-    .button-outline(@writersinharmony, white);
+    .button-outline(@buck, white);
   }
 }
 
-.ponymc, #ponymc {
+.writerinharmony, #writersinharmony {
   a.button {
-    .button-outline(@ponymc, white);
+    .button-outline(@writersinharmony, white);
   }
 }
 
