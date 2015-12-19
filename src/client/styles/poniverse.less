@@ -543,7 +543,7 @@ body.padded { padding-top: 70px; }
 
 .arrow-down {
   display: block;
-  margin: 0 auto;
+  margin: 16px auto 0;
   background-image: url(/img/icons/arrow.svg);
   background-size: 100%;
   width: 16px;
@@ -620,21 +620,23 @@ section#intro {
   text-transform: lowercase;
   background-position: right;
   h1 {
-    font-size: 72px;
+    font-size: 80px;
     font-weight: 600;
     margin: 0;
 
     &:last-of-type {
       margin-bottom: 10px;
     }
-
-    small {
-      margin-bottom: 0;
-      font-size: 62px;
-      line-height: 1em;
-      display: block;
-    }
   }
+
+  small {
+    font-family: "ProximaNovaSoft";
+    font-size: 32px;
+    margin-bottom: 0;
+    line-height: 1em;
+    display: block;
+  }
+
   p {
     margin-bottom: 35px;
   }
@@ -642,6 +644,7 @@ section#intro {
     position: relative;
     z-index: 50;
   }
+
   &:after {
     position: absolute;
     top: 0;
