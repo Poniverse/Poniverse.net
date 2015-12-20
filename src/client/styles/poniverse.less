@@ -341,6 +341,13 @@ pre {
 .button-roleplay, .button-ponyroleplay { .button; .button-outline(@ponyroleplay,@white); &:hover { color: @ponyroleplay; } }
 .button-movie { .button; .button-outline(@blue,@white) }
 
+button[disabled],
+button[disabled]:hover {
+  color: @blue;
+  background: #dadada;
+  cursor: not-allowed;
+}
+
 // Text colors
 .text-forum, .text-mlpforums { color:@mlpforums; }
 .text-music, .text-ponyfm { color:@ponyfm; }
