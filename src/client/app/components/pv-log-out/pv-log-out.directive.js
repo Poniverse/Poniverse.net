@@ -12,7 +12,11 @@
         //<a href pv-log-out/>
         var directive = {
             link: link,
-            restrict: 'A'
+            restrict: 'A',
+            scope: {
+                'inHeader': '=',
+                'user': '='
+            }
         };
 
         function link(scope, element, attrs) {
