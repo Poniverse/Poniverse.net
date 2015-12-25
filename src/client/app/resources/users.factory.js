@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -14,6 +14,13 @@
                 username: {presence: true, length: {maximum: 255, minimum: 3}},
                 display_name: {presence: true, length: {maximum: 255, minimum: 3}},
                 email: {presence: true, length: {maximum: 255, minimum: 3}},
+            },
+            relationships: {
+                'newsletter-subscription': {
+                    type: 'hasOne',
+                    model: 'newsletter-subscriptions',
+                    reflection: false
+                }
             }
         };
 

@@ -17,6 +17,7 @@
             'ngplus',
             'ngSanitize',
             'ngStorage',
-            'satellizer'
+            'satellizer',
+            'angular-ladda'
         ]);
 })();

@@ -26,7 +26,8 @@
         $logProvider,
         routerHelperProvider,
         exceptionHandlerProvider,
-        $authProvider
+        $authProvider,
+        laddaProvider
     ) {
         if ($logProvider.debugEnabled) {
             $logProvider.debugEnabled(true);
@@ -36,6 +37,10 @@
         $authProvider.loginUrl = config.loginUrl;
         $authProvider.unlinkUrl = config.loginUrl;
         $authProvider.tokenName = 'access_token';
+
+        laddaProvider.setOption({
+            style: 'expand-right'
+        });
     }
 
 })();

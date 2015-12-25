@@ -40,6 +40,14 @@
                     title: 'Change Password'
                 }
             },
+            {
+                state: 'account.newsletter',
+                config: {
+                    url: '/newletter',
+                    templateUrl: 'app/account/newsletter.html',
+                    title: 'Newsletter'
+                }
+            }
         ];
     }
 })();
