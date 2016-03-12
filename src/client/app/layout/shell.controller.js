@@ -12,7 +12,7 @@
         logger,
         coreevents,
         $sessionStorage,
-        Users
+        User
     ) {
         var vm = this;
         vm.busyMessage = 'Please wait ...';
@@ -29,13 +29,19 @@
                 setCurrentUser(null, $sessionStorage.user);
             }
 
+            $rootScope.setCurrentUser = setCurrentUser;
             $rootScope.$on(coreevents.loginSuccess, setCurrentUser);
             $rootScope.$on(coreevents.logoutSuccess, unsetCurrentUser);
         }
 
         function setCurrentUser(event, user) {
-            vm.currentUser = Users.get(user.data.id);
-            $sessionStorage.user = user;
+            vm.currentUser = User.new().setData(user);
+            vm.currentUser.load(user.id).then(loadSuccess);
+
+            function loadSuccess(user) {
+                console.log(vm.currentUser);
+                $sessionStorage.user = user.data;
+            }
         }
 
         function unsetCurrentUser(event) {

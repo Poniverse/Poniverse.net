@@ -4,9 +4,6 @@
     angular
         .module('app.core', [
             'ui.router',
-            'angular-jsonapi',
-            'angular-jsonapi-rest',
-            'angular-jsonapi-local',
             'blocks.exception',
             'blocks.logger',
             'blocks.router',

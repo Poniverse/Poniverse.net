@@ -5,11 +5,10 @@
         .module('app.account')
         .controller('AccountController', AccountController);
 
-    function AccountController($q, logger, Users, $scope, $rootScope) {
+    function AccountController($q, logger, User, $scope, $rootScope) {
         var vm = this;
         var listener;
         vm.user = $scope.vm.currentUser;
-
         vm.update = update;
         vm.updatePassword = updatePassword;
 
@@ -22,11 +21,10 @@
         }
 
         function update() {
-            vm.user.save().then(success, failure);
+            vm.user.update().then(success).catch(failure);
 
-            function success() {
-                console.log('Success!');
-                console.log(arguments);
+            function  success() {
+                $rootScope.setCurrentUser(null, vm.user.data);
             }
 
             function failure(err) {
@@ -36,7 +34,7 @@
         }
 
         function updatePassword() {
-            vm.user.save().then(success, failure);
+            vm.user.update(false).then(success, failure);
 
             function success() {
                 removePasswordFormData();
@@ -51,13 +49,21 @@
         }
 
         function removePasswordFormData(event) {
-            // TODO: Come back and review this
-            delete vm.user.form.data.attributes['current_password'];
-            delete vm.user.form.data.attributes['password'];
-            delete vm.user.form.data.attributes['password_confirmation'];
+            console.log(event);
+
+            var attributesToDelete = [
+                'current_password',
+                'password',
+                'password_confirmation'
+            ];
+
+            attributesToDelete.forEach(function (attribute) {
+                delete vm.user.data[attribute];
+                delete vm.user.form[attribute];
+            });
 
             // Unbind the rootScope listener
-            if (typeof event !== 'undefined') {
+            if (typeof event !== 'undefined' && typeof listener !== 'undefined') {
                 listener();
             }
         }

@@ -5,7 +5,7 @@
         .module('app.components')
         .controller('PvNewsletterController', PvNewsletterController);
 
-    function PvNewsletterController($rootScope, $scope, $log, UserNewsletter) {
+    function PvNewsletterController($rootScope, $scope, $log, User) {
         var vm = this;
 
         vm.user = $scope.pvUser;
@@ -20,13 +20,12 @@
         ///
 
         function activate() {
-            var isSubscribed = typeof vm.user.relationships['newsletter-subscription'] !== 'undefined';
-
-            setSubsribedStatus(isSubscribed);
+            setSubsribedStatus(vm.user.data.has_newsletter_subscription);
         }
 
         function setSubsribedStatus(isSubscribed) {
             vm.subscribed = isSubscribed;
+            vm.user.reload();
             vm.buttonStatus = vm.subscribed ? 'Unsubscribe' : 'Sign me up!';
         }
 
@@ -37,13 +36,13 @@
         function subscribe() {
             vm.loading = true;
 
-            UserNewsletter.subscribe(vm.user).then(success, failure);
+            vm.user.subscribe().then(success, failure);
         }
 
         function unsubscribe() {
             vm.loading = true;
 
-            UserNewsletter.unsubscribe(vm.user).then(success, failure);
+            vm.user.unsubscribe().then(success, failure);
         }
 
         function success(data) {

@@ -32,7 +32,6 @@
     "angular-motion": "~0.4.2",
     "satellizer": "~0.12.5",
     "ngstorage": "~0.3.9",
-    "angular-jsonapi": "https://github.com/Lavoaster/angular-jsonapi.git#c22f20bf0e0c4b25638994d4ea66c8a4940ff07d",
     "angular-ladda": "~0.3.1"
   },
   "overrides": {

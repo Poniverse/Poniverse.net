@@ -13,7 +13,7 @@
     var config = {
         appErrorPrefix: '[Poniverse Error] ',
         appTitle: 'Poniverse',
-        apiUrl: 'http://api.poniverse.local',
+        apiUrl: 'http://api.poniverse.poni',
         loginUrl: '/api/auth',
         logoutUrl: '/api/clearauth'
     };

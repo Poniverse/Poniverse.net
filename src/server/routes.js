@@ -44,14 +44,14 @@ function postAuth(req, res, next) {
             return res.status(response.statusCode).send(body);
         }
 
-        vault.write(req, body);
-
         var oauth = JSON.parse(body);
+
+        vault.write(req, JSON.stringify({refresh_token: oauth.refresh_token}));
 
         request.get({
             url: process.env.PONIVERSE_API_URL + '/user',
             headers: {
-                'Accept': 'application/vnd.api+json,application/vnd.poniverse.api.v2+json',
+                'Accept': 'application/vnd.poniverse.v2+json',
                 'Authorization': 'Bearer ' + oauth.access_token
             }
         }, function(err, resp, reqBody) {
@@ -98,13 +98,11 @@ function postRefreshToken(req, res, next) {
 
         var oauthResponse = JSON.parse(body);
 
-        console.log(oauth, oauthResponse);
-
         if (typeof oauthResponse.error !== 'undefined') {
             return res.status(response.statusCode).send(oauthResponse);
         }
 
-        vault.write(req, JSON.stringify(oauthResponse));
+        vault.write(req, JSON.stringify({refresh_token: oauthResponse.refresh_token}));
 
         var authResponse = {
             access_token: oauthResponse.access_token

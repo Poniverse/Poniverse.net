@@ -3,35 +3,22 @@
 
     angular
         .module('app.resources')
-        .run(appRun)
-        .factory('Users', Users);
+        .factory('User', User);
 
-    function appRun(config, $jsonapi) {
-        var usersSchema = {
-            type: 'users',
-            id: 'uuid4',
-            attributes: {
-                username: {presence: true, length: {maximum: 255, minimum: 3}},
-                display_name: {presence: true, length: {maximum: 255, minimum: 3}},
-                email: {presence: true, length: {maximum: 255, minimum: 3}},
-            },
-            relationships: {
-                'newsletter-subscription': {
-                    type: 'hasOne',
-                    model: 'newsletter-subscriptions',
-                    reflection: false
-                }
-            }
-        };
+    function User(Resource, config, $http) {
+        var user = new Resource();
+        user.endpoint = config.apiUrl + '/users';
+        user.subscribe = subscribe;
+        user.unsubscribe = unsubscribe;
 
-        var localSource = $jsonapi.sourceLocal.create('users', 'AngularJsonAPI');
-        var restSource = $jsonapi.sourceRest.create('users', config.apiUrl + '/users');
-        var usersSynchronizer = $jsonapi.synchronizerSimple.create([localSource, restSource]);
+        return user;
 
-        $jsonapi.addResource(usersSchema, usersSynchronizer);
-    }
+        function subscribe() {
+            return $http.post(this.endpoint + '/' + this.data['id'] + '/newsletter');
+        }
 
-    function Users($jsonapi) {
-        return $jsonapi.getResource('users');
+        function unsubscribe() {
+            return $http.delete(this.endpoint + '/' + this.data['id'] + '/newsletter');
+        }
     }
 })();
