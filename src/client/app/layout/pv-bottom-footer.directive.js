@@ -21,6 +21,7 @@
         /* @ngInject */
         function BottomFooterController() {
             var vm = this;
+            vm.date = new Date();
         }
 
         return directive;
