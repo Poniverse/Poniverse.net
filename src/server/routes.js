@@ -9,10 +9,15 @@ var vault = cookiee(process.env.APP_KEY, {
     cookie: 'oauth-secrets',
     httpOnly: true,
 });
+var clientAccessToken = {
+    accessToken: null,
+    expiresAt: null
+};
 
 router.post('/auth', postAuth);
 router.post('/clearauth', postClearAuth);
 router.post('/refresh-token', postRefreshToken);
+router.post('/sign-up', postSignUp);
 router.get('/me', getMe);
 router.get('/*', four0four.notFoundMiddleware);
 
@@ -110,6 +115,63 @@ function postRefreshToken(req, res, next) {
 
         res.status(response.statusCode).send(authResponse);
     });
+}
+
+function postSignUp(req, res, next) {
+    if (clientAccessToken.accessToken && clientAccessToken.expiresAt > (new Date())) {
+        registerUser();
+    } else {
+        getClientAccessToken(registerUser);
+    }
+
+    function registerUser() {
+        var requestBody = {
+            email: req.body.email,
+            username: req.body.username,
+            display_name: req.body.username,
+            password: req.body.password,
+            password_confirmation: req.body.password_confirmation,
+            tos: req.body.tos,
+            subscribe_to_newsletter: req.body.subscribe_to_newsletter,
+            howdidyoufindusgoodperson: req.body.howdidyoufindusgoodperson // Lol the joke is long over now, this should be named properly.
+        };
+
+        request.post({
+            url: process.env.PONIVERSE_API_URL + '/users',
+            headers: {
+                'Accept': 'application/vnd.poniverse.v2+json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + clientAccessToken.accessToken
+            },
+            json: true,
+            body: requestBody
+        }, function(err, resp, reqBody) {
+            res.status(resp.statusCode).send(reqBody);
+        });
+    }
+
+    function getClientAccessToken(callback) {
+        var form = {
+            grant_type: 'client_credentials',
+            client_id: process.env.PONIVERSE_CLIENT_ID,
+            client_secret: process.env.PONIVERSE_CLIENT_SECRET
+        };
+
+        request.post({
+            url: process.env.PONIVERSE_API_URL + '/oauth/access_token',
+            form: form
+        }, function (error, response, body) {
+            var oauthResponse = JSON.parse(body);
+
+            var date = new Date();
+            date.setSeconds(date.getSeconds() + (oauthResponse.expires_in - 30));
+
+            clientAccessToken.accessToken = oauthResponse.access_token;
+            clientAccessToken.expiresAt = date;
+
+            callback();
+        });
+    }
 }
 
 function postClearAuth(req, res, next) {

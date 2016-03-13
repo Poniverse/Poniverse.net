@@ -25,7 +25,8 @@
 
             ignoredUrls = [
                 config.loginUrl,
-                '/api/refresh-token'
+                '/api/refresh-token',
+                '/api/sign-up'
             ];
 
             // We're only dealing with with 401's and ignoring login auth failures

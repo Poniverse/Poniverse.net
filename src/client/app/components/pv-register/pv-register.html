@@ -1,0 +1,65 @@
+<div tabindex="-1" role="dialog" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="register">
+                <i class="icon-poniverse"></i>
+                <h2>Register for <span>Poniverse</span></h2>
+
+                <div ng-repeat="error in errors" type="error.type" close="closeError($index)" class="alert">
+                    <strong>Error!</strong> {{ error.message }}
+                </div>
+
+                <form class="form-horizontal" ng-submit="vm.register()" accept-charset="UTF-8" ng-if="!vm.complete">
+                    <div class="form-group">
+                        <input id="username" class="form-control" placeholder="username" name="username" type="text" ng-model="vm.form.username">
+
+                        <input id="email" class="form-control" placeholder="email" name="email" type="email" ng-model="vm.form.email">
+
+                        <input id="password" class="form-control" placeholder="password" name="password" type="password" ng-model="vm.form.password">
+
+                        <input id="password_confirmation" class="form-control" placeholder="password confirmation" name="password_confirmation" type="password" ng-model="vm.form.password_confirmation">
+
+                        <label class="form-control-select" for="howdidyoufindusgoodperson">
+                            <select id="howdidyoufindusgoodperson" class="form-control" name="howdidyoufindusgoodperson" ng-model="vm.form.howdidyoufindusgoodperson">
+                                <option value="">how did you find us?</option>
+                                <option value="other">Other</option>
+                                <option value="everfreenw_2015_attendee">Everfree Northwest 2015 Attendee</option>
+                                <option value="bronycon">BronyCon</option>
+                                <option value="bronycan">BronyCAN</option>
+                                <option value="friend">Referred by friend</option>
+                                <option value="twitter">Twitter</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="google">Google</option>
+                                <option value="yahoo">Yahoo</option>
+                                <option value="bing">Bing</option>
+                                <option value="link">Link from site</option>
+                            </select>
+                        </label>
+
+                        <label class="checkbox">
+                            Do you agree to the <a ng-click="tos()">Terms of service</a>?
+                            <input type="checkbox" name="tos" value="1" ng-model="vm.form.tos">
+                        </label>
+
+                        <div class="newsletter-optin">
+                            <p>
+                                Delivered monthly, our free newsletter keeps you in the loop with community spotlights, project updates straight from our staff, and exclusive interviews. Want in?
+                            </p>
+                            <label class="checkbox">
+                                Yes, please! <input type="checkbox" name="newsletter" value="1" ng-model="vm.form.subscribe_to_newsletter">
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" ladda ng-model="loading" name="submit" class="ladda-button btn btn-info btn-block btn-large" data-style="slide-up" id="register">register</button>
+                </form>
+
+                <div ng-if="vm.complete" class="register-complete">
+                    <h3>Almost done!</h3>
+                    <p>Before we can let you off into the wild we must first verify you have an active email to activate your account, so we've sent you an email.</p>
+                    <p>It should arrive instantly however it could take up-to 10 minutes, if you haven't received it by then try checking your junk/spam folder.</p>
+                    <button type="button" class="btn btn-default" ng-click="$hide()">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
