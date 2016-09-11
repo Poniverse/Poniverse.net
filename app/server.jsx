@@ -58,14 +58,19 @@ function renderFullPage(renderedContent, initialState, head={
  * and pass it into the Router.run function.
  */
 export default function render(req, res) {
+  const authInterceptor = new AuthInterceptor();
+
   const history = createMemoryHistory();
   const initialStore = {};
 
-  const authInterceptor = new AuthInterceptor();
-  authInterceptor.registerServerInterceptor(req, res);
-
   const store = configureStore(initialStore, history);
   const routes = createRoutes(store);
+
+  if (!req.cookies['oauth-secrets']) {
+    return continueRouting();
+  }
+
+  authInterceptor.registerServerInterceptor(req, res);
 
   // Wait for the user to be fetched before continuing to route the application.
   store.dispatch(getLoggedInUser()).then(continueRouting).catch(continueRouting);

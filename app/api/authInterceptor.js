@@ -28,6 +28,10 @@ export default class AuthInterceptor {
   }
 
   deregister() {
+    if (! this.interceptor) {
+      return;
+    }
+
     axios.interceptors.response.eject(this.interceptor);
   }
 
