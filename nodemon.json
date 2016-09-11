@@ -7,6 +7,7 @@
     "app/modules/layout/components/Meta/index.jsx",
     "app/store/configureStore.js",
     "app/api/fetchComponentDataBeforeRender.js",
+    "app/api/authInterceptor.js",
     "server",
     "webpack",
     ".env"

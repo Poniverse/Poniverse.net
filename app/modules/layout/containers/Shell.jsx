@@ -29,8 +29,6 @@ class Shell extends Component {
   render() {
     const { children, user, actions } = this.props;
 
-    console.log(user);
-
     return (
       <div className="shell">
         <Header user={user} onLoginClick={actions.startAuth} onButtonClick={actions.getLoggedInUser} />
