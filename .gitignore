@@ -9,3 +9,8 @@ build
 .tmp
 report
 .env
+
+npm-debug.log
+.idea
+public
+.swp

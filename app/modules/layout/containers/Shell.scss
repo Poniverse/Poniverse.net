@@ -1,0 +1,28 @@
+@import "../../../style/app";
+
+body {
+  padding-top: $navbar-height;
+}
+
+html, body {
+  height: 100%;
+}
+
+#app, .shell {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  margin-bottom: -($navbar-height);
+
+  &:after {
+    content: "";
+    display: block;
+  }
+}
+
+footer,
+main:after {
+  height: $navbar-height;
+}

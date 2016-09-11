@@ -1,0 +1,30 @@
+@import "variables";
+
+$brand-primary: $poniverse;
+
+
+//== Navbar
+//
+//##
+
+$navbar-default-color: #fff;
+$navbar-default-bg: $poniverse;
+$navbar-default-border: none;
+
+$navbar-default-link-color:                #fff;
+$navbar-default-link-hover-color:          #fff;
+$navbar-default-link-hover-bg:             darken($navbar-default-bg, 6.5%);
+$navbar-default-link-active-color:         #fff;
+$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%);
+$navbar-default-link-disabled-color:       #fff;
+$navbar-default-link-disabled-bg:          transparent;
+
+// Navbar brand label
+$navbar-default-brand-color:               $navbar-default-link-color;
+$navbar-default-brand-hover-color:         $navbar-default-link-color;
+$navbar-default-brand-hover-bg:            transparent;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           #ddd !default;
+$navbar-default-toggle-icon-bar-bg:        #888 !default;
+$navbar-default-toggle-border-color:       #ddd !default;
