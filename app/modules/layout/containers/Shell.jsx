@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../../../style/vendor.scss';
 import './Shell.scss';
-import { startAuth, finishAuth } from '../../auth/redux/auth';
+import { startAuth, finishAuth, logout } from '../../auth/redux/auth';
 import { getLoggedInUser } from '../../user/redux/user';
 import { Field, reduxForm } from 'redux-form';
 import LoginFormModal from '../../auth/containers/LoginFormModal';
@@ -31,7 +31,7 @@ class Shell extends Component {
 
     return (
       <div className="shell">
-        <Header user={user} onLoginClick={actions.startAuth} onButtonClick={actions.getLoggedInUser} />
+        <Header user={user} onLoginClick={actions.startAuth} onLogoutClick={actions.logout} />
         <main>
           {children}
         </main>
@@ -50,7 +50,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({startAuth, finishAuth, getLoggedInUser}, dispatch) };
+  return { actions: bindActionCreators({startAuth, finishAuth, getLoggedInUser, logout}, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shell);

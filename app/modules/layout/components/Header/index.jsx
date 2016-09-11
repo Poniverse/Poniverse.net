@@ -42,12 +42,15 @@ class Header extends Component {
   }
 
   renderLoggedIn(user) {
-    const { onButtonClick } = this.props;
+    const { onLogoutClick } = this.props;
 
     return (
       <Nav pullRight>
-        <NavItem eventKey={1}>Welcome, {user.data.username}</NavItem>
-        <NavItem eventKey={2} onClick={onButtonClick}>CLICK ME</NavItem>
+        <NavItem eventKey={1}>{user.data.display_name}</NavItem>
+        <LinkContainer to="/preferences">
+          <NavItem eventKey={1}>Preferences</NavItem>
+        </LinkContainer>
+        <NavItem eventKey={2} onClick={onLogoutClick}>Logout</NavItem>
       </Nav>
     );
   }

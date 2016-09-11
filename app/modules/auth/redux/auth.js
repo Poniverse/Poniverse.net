@@ -1,6 +1,6 @@
 import {push} from "react-router-redux";
 import axios from 'axios';
-import { getLoggedInUser } from '../../user/redux/user';
+import { getLoggedInUser, clearLoggedInUser } from '../../user/redux/user';
 
 export const START_AUTH = 'poniverse/auth/START_AUTH';
 export const FINISH_AUTH = 'poniverse/auth/FINISH_AUTH';
@@ -110,16 +110,17 @@ export function login(username, password) {
  * Logout from the current session
  * @returns {function()}
  */
-export function logOut() {
+export function logout() {
   return dispatch => {
-    delete Axios.defaults.headers.common.Authorization;
+    delete axios.defaults.headers.common.Authorization;
 
     // Fire and forget
-    Axios
+    axios
       .post('/auth/logout', {}, {
         baseURL: '' // This request is being made to the local node server
       })
       .then(() => {
+        dispatch(clearLoggedInUser());
         dispatch(logoutSuccess());
       })
       .catch(error => {
