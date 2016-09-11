@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Shell from './modules/layout/containers/Shell';
 import Home from './modules/pages/containers/Home';
+import Preferences from './modules/preferences/containers/Preferences';
 
 /*
  * @param {Redux Store}
@@ -11,7 +12,9 @@ import Home from './modules/pages/containers/Home';
 export default (store) => {
   return (
     <Route path="/" component={Shell}>
-      <IndexRoute component={Home}  />
+      <IndexRoute component={Home}/>
+
+      <Route path="/preferences" component={Preferences} />
     </Route>
   );
 };
