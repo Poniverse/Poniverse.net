@@ -11,9 +11,12 @@ export const LOGIN_FAILURE = 'poniverse/auth/LOGIN_FAILURE';
 
 export const LOGOUT_SUCCESS = 'poniverse/auth/LOGOUT_SUCCESS';
 
+export const SET_ACCESS_TOKEN = 'poniverse/auth/SET_ACCESS_TOKEN';
+
 const initialState = {
   isFetching: false,
   showAuthModal: false,
+  accessToken: null
 };
 
 export function reducer(state = initialState, action) {
@@ -28,6 +31,7 @@ export function reducer(state = initialState, action) {
         ...state,
         showAuthModal: false
       };
+
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -41,6 +45,11 @@ export function reducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
       return initialState;
+    case SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: action.accessToken
+      };
     default:
       return state;
   }
@@ -104,6 +113,18 @@ export function login(username, password) {
         console.error('Login Error', error);
       });
   };
+}
+
+export function setAccessToken(accessToken) {
+  axios.defaults.headers.common = {
+    ...axios.defaults.headers.common,
+    Authorization: 'Bearer ' + accessToken
+  };
+
+  return {
+    type: SET_ACCESS_TOKEN,
+    accessToken
+  }
 }
 
 /**

@@ -23,9 +23,9 @@ axios.defaults.baseURL = apiUrl;
 const authInterceptor = new AuthInterceptor();
 authInterceptor.registerInterceptor();
 
-// if (initialState.auth.accessToken) {
-//   axios.defaults.headers.common.Authorization = 'Bearer ' + initialState.auth.accessToken;
-// }
+if (initialState.auth.accessToken) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + initialState.auth.accessToken;
+}
 
 const store = configureStore(initialState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);

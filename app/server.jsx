@@ -9,6 +9,7 @@ import headconfig from './modules/layout/components/Meta';
 import { fetchComponentDataBeforeRender } from 'api/fetchComponentDataBeforeRender';
 import { IntlProvider } from 'react-intl';
 import AuthInterceptor from './api/authInterceptor';
+import { setAccessToken } from './modules/auth/redux/auth';
 import { getLoggedInUser } from './modules/user/redux/user';
 
 const clientConfig = {
@@ -73,7 +74,14 @@ export default function render(req, res) {
   authInterceptor.registerServerInterceptor(req, res);
 
   // Wait for the user to be fetched before continuing to route the application.
-  store.dispatch(getLoggedInUser()).then(continueRouting).catch(continueRouting);
+  store.dispatch(getLoggedInUser())
+    .then(() => {
+      // We'll do this the cheaty way ;)
+      // by chopping off the 'Bearer ' part of the header.
+      store.dispatch(setAccessToken(axios.defaults.headers.common.Authorization.substring(7)));
+    })
+    .then(continueRouting)
+    .catch(continueRouting);
 
   function continueRouting() {
     authInterceptor.deregister();
