@@ -8,6 +8,27 @@ import { getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, upda
 import AccountForm from '../components/AccountForm';
 import PasswordForm from '../components/PasswordForm';
 import NewsletterForm from '../components/NewsletterForm';
+import notification  from 'react-notification-system-redux';
+
+const successNotification = {
+  title: 'Account Updated!',
+  message: 'Your account has been successfully updated!',
+  position: 'tc',
+  autoDismiss: 5,
+};
+const errorNotification = {
+  title: 'Error!',
+  message: 'Your account failed to be updated!',
+  position: 'tc',
+  autoDismiss: 5,
+};
+
+const noFieldsModifiedNotification = {
+  title: 'Warning!',
+  message: 'No fields have been modified!',
+  position: 'tc',
+  autoDismiss: 5,
+};
 
 class Preferences extends Component {
   handleNewsletterToggle() {
@@ -21,15 +42,54 @@ class Preferences extends Component {
   }
 
   handleAccountFormSubmit(values) {
-    const { actions } = this.props;
+    const { actions, user } = this.props;
+    const update = {};
 
-    return actions.updateUser(values);
+    // Get difference
+    Object.keys(values).forEach(key => {
+      if (values[key] === user[key]) return;
+
+      update[key] = values[key];
+    });
+
+    if (Object.keys(update).length === 0) {
+      return actions.warning(noFieldsModifiedNotification);
+    }
+
+    return actions.updateUser(update).then(() => {
+      actions.success(successNotification);
+    }).catch((error) => {
+      error.response.data.errors.forEach(::this.processError);
+
+      throw error;
+    });
   }
 
   handlePasswordFormSubmit(values) {
     const { actions } = this.props;
 
-    return actions.updateUser(values).then(() => actions.reset('passwordForm'));
+    if (Object.keys(values).length !== 3) {
+      return actions.warning({
+        ...noFieldsModifiedNotification,
+        message: 'Please fill in all fields to change your password.'
+      });
+    }
+    return actions.updateUser(values).then(() => {
+      actions.reset('passwordForm')
+    }).catch((error) => {
+      error.response.data.errors.forEach(::this.processError);
+
+      throw error;
+    });
+  }
+
+  processError(error) {
+    const { actions } = this.props;
+
+    actions.error({
+      ...errorNotification,
+      message: error.detail
+    })
   }
 
   render() {
@@ -95,7 +155,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser, reset}, dispatch) };
+  return {
+    actions: {
+      ...bindActionCreators({getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser, reset, ...notification}, dispatch),
+    }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Preferences);

@@ -10,6 +10,7 @@ import { startAuth, finishAuth, logout } from '../../auth/redux/auth';
 import { getLoggedInUser } from '../../user/redux/user';
 import { Field, reduxForm } from 'redux-form';
 import LoginFormModal from '../../auth/containers/LoginFormModal';
+import Notifications from 'react-notification-system-redux';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -23,14 +24,16 @@ import LoginFormModal from '../../auth/containers/LoginFormModal';
 class Shell extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
+    notifications: PropTypes.array.isRequired,
     children: PropTypes.object
   };
 
   render() {
-    const { children, user, actions } = this.props;
+    const { children, user, actions, notifications } = this.props;
 
     return (
       <div className="shell">
+        <Notifications notifications={notifications} />
         <Header user={user} onLoginClick={actions.startAuth} onLogoutClick={actions.logout} />
         <main>
           { children }
@@ -45,7 +48,8 @@ class Shell extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    notifications: state.notifications
   };
 }
 
