@@ -31,7 +31,7 @@ class Shell extends Component {
 
     return (
       <div className="shell">
-        <Header user={user} onLoginClick={actions.startAuth} onLogoutClick={actions.getLoggedInUser } />
+        <Header user={user} onLoginClick={actions.startAuth} onLogoutClick={actions.logout} />
         <main>
           { children }
         </main>

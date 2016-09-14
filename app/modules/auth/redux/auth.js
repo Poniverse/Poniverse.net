@@ -141,6 +141,7 @@ export function logout() {
         baseURL: '' // This request is being made to the local node server
       })
       .then(() => {
+        dispatch(push('/'));
         dispatch(clearLoggedInUser());
         dispatch(logoutSuccess());
       })

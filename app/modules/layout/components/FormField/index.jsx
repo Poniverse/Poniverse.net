@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
-import { Modal, Button } from 'react-bootstrap';
+import { Col, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 class FormField extends Component {
   render() {
     const { input, label, type, meta: { touched, error } } = this.props;
 
+    // TODO: Handle validation state
+
     return (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} placeholder={label} type={type}/>
-          {touched && error && <span>{error}</span>}
-        </div>
-      </div>
+      <FormGroup>
+        <Col componentClass={ControlLabel} sm={2}>
+          {label}
+        </Col>
+        <Col sm={10}>
+          <FormControl type={type} placeholder={label} {...input} />
+        </Col>
+      </FormGroup>
     )
   }
 }

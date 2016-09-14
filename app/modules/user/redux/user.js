@@ -8,7 +8,7 @@ export const USER_CLEAR = 'poniverse/user/USER_CLEAR';
 
 const initialState = {
   isFetching: false,
-  loggedIn: false
+  data: null,
 };
 
 export function reducer(state = initialState, action) {
@@ -62,8 +62,27 @@ export function clearLoggedInUser() {
   }
 }
 
+export function newsletterRequestSuccess(newsletter) {
+  return {
+    type: NEWSLETTER_SUCCESS,
+    newsletter
+  };
+}
+
+export function newsletterRequestFailure() {
+  return {
+    type: NEWSLETTER_FAILURE
+  };
+}
+
+export function clearLoggedInUser() {
+  return {
+    type: NEWSLETTER_CLEAR
+  }
+}
+
 export function getLoggedInUser() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(userRequest());
 
     return axios
@@ -73,6 +92,38 @@ export function getLoggedInUser() {
       })
       .catch(err => {
         dispatch(userRequestFailure());
+      })
+  }
+}
+
+export function updateUser(values) {
+  return (dispatch, getState) => {
+    return axios
+      .patch('/users/' + getState().user.data.id, values)
+      .then(res => {
+        return dispatch(getLoggedInUser());
+      });
+  }
+}
+
+export function subscribeToNewsletter() {
+  return (dispatch, getState) => {
+
+    return axios
+      .post('/users/' + getState().user.data.id + '/newsletter')
+      .then(res => {
+        return dispatch(getLoggedInUser());
+      })
+  }
+}
+
+export function unsubscribeFromNewsletter() {
+  return (dispatch, getState) => {
+
+    return axios
+      .delete('/users/' + getState().user.data.id + '/newsletter')
+      .then(res => {
+        return dispatch(getLoggedInUser());
       })
   }
 }

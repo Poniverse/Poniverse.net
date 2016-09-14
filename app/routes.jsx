@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Shell from './modules/layout/containers/Shell';
 import Home from './modules/pages/containers/Home';
-import Preferences from './modules/preferences/containers/Preferences';
+import Preferences from './modules/user/containers/Preferences';
 
 /*
  * @param {Redux Store}

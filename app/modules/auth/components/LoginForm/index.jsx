@@ -11,12 +11,16 @@ class LoginForm extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
+
         <Field name="username" type="text" component={FormField} label="Username"/>
+
         <Field name="password" type="password" component={FormField} label="Password"/>
+
         {error && <strong>{error}</strong>}
+
         <div>
-          <button type="submit" disabled={submitting}>Log In</button>
-          <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+          <Button type="submit" disabled={submitting}>Log In</Button>
+          <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
         </div>
       </form>
     )
