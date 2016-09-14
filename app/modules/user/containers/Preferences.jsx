@@ -34,11 +34,24 @@ class Preferences extends Component {
   handleNewsletterToggle() {
     const { user, actions } = this.props;
 
+    let promise = null;
+
     if (user.has_newsletter_subscription) {
-      return actions.unsubscribeFromNewsletter();
+      promise = actions.unsubscribeFromNewsletter();
     } else {
-      return actions.subscribeToNewsletter();
+      promise = actions.subscribeToNewsletter();
     }
+
+    return promise.then(() => {
+      actions.success({
+        ...successNotification,
+        message: 'Your newsletter preferences have been updated!'
+      });
+    }).catch((error) => {
+      error.response.data.errors.forEach(::this.processError);
+
+      throw error;
+    })
   }
 
   handleAccountFormSubmit(values) {
