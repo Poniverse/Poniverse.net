@@ -62,25 +62,6 @@ export function clearLoggedInUser() {
   }
 }
 
-export function newsletterRequestSuccess(newsletter) {
-  return {
-    type: NEWSLETTER_SUCCESS,
-    newsletter
-  };
-}
-
-export function newsletterRequestFailure() {
-  return {
-    type: NEWSLETTER_FAILURE
-  };
-}
-
-export function clearLoggedInUser() {
-  return {
-    type: NEWSLETTER_CLEAR
-  }
-}
-
 export function getLoggedInUser() {
   return (dispatch, getState) => {
     dispatch(userRequest());
