@@ -77,6 +77,13 @@ export function getLoggedInUser() {
   }
 }
 
+export function activateAccount(code) {
+  return (dispatch, getState) => {
+    return axios
+      .post('/user/activate', {code});
+  }
+}
+
 export function updateUser(values) {
   return (dispatch, getState) => {
     return axios

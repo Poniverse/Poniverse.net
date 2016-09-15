@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Shell from './modules/layout/containers/Shell';
 import Home from './modules/pages/containers/Home';
+import Activate from './modules/user/containers/Activate';
 import Preferences from './modules/user/containers/Preferences';
 
 /*
@@ -26,6 +27,8 @@ export default (store) => {
   return (
     <Route path="/" component={Shell}>
       <IndexRoute component={Home}/>
+
+      <Route path="/activate/:code" component={Activate} />
 
       <Route onEnter={verifyLoggedIn}>
         <Route path="/preferences" component={Preferences} />
