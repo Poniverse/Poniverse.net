@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { reset } from 'redux-form';
 import { Grid, Button, Row, Col, Panel, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import { getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser, activateAccount } from '../redux/user';
+import { getLoggedInUser, updateUser, activateAccount } from '../redux/user';
 import notification  from 'react-notification-system-redux';
 
 
@@ -18,7 +18,7 @@ class Activate extends Component {
   }
 
   componentWillMount() {
-    const { actions, params: { code } } = this.props;
+    const { actions, params: { code }, loggedIn } = this.props;
 
     actions.activateAccount(code).then((response) => {
       let message = 'Your account has been successfully activated!';
@@ -30,7 +30,12 @@ class Activate extends Component {
       this.setState({
         loading: false,
         message
-      })
+      });
+
+      if (loggedIn) {
+        // Update information in the state about the user.
+        actions.getLoggedInUser();
+      }
     }).catch((error) => {
       let message = 'There was an unknown error activating your account :(';
 
@@ -41,16 +46,12 @@ class Activate extends Component {
       this.setState({
         loading: false,
         message
-      })
+      });
     });
   }
 
   render() {
-    const { user } = this.props;
-
     const { loading, message } = this.state;
-
-    console.log(this.props);
 
     return (
       <Grid className="text-center">
@@ -68,14 +69,14 @@ class Activate extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.data
+    loggedIn: state.user.loggedIn,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      ...bindActionCreators({updateUser, activateAccount, ...notification}, dispatch),
+      ...bindActionCreators({updateUser, activateAccount, getLoggedInUser, ...notification}, dispatch),
     }
   };
 }
