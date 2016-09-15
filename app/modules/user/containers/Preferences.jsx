@@ -96,6 +96,44 @@ class Preferences extends Component {
     });
   }
 
+  handleResendConfirmationEmail() {
+    const { actions } = this.props;
+
+    const data = {
+      resendConfirmation: true
+    };
+
+    return actions.updateUser(data).then(() => {
+      actions.success({
+        ...successNotification,
+        message: 'Confirmation email has been resent.'
+      });
+    }).catch((error) => {
+      error.response.data.errors.forEach(::this.processError);
+
+      throw error;
+    });
+  }
+
+  handleEmailChangeCancel() {
+    const { actions } = this.props;
+
+    const data = {
+      cancelEmailChange: true
+    };
+
+    return actions.updateUser(data).then(() => {
+      actions.success({
+        ...successNotification,
+        message: 'Email change request has been cancelled.'
+      });
+    }).catch((error) => {
+      error.response.data.errors.forEach(::this.processError);
+
+      throw error;
+    });
+  }
+
   processError(error) {
     const { actions } = this.props;
 
@@ -112,6 +150,9 @@ class Preferences extends Component {
       <Grid>
         <h1>Preferences</h1>
         <hr />
+
+        {user.new_email ? this.renderEmailChange() : null}
+
         <Row>
           <Col xs={6}>
             <Panel>
@@ -158,6 +199,26 @@ class Preferences extends Component {
         </Row>
       </Grid>
     );
+  }
+
+  renderEmailChange() {
+    const { user } = this.props;
+
+    return (
+      <Row>
+        <Col xs={12}>
+          <Panel bsStyle="warning">
+            <h2 style={{marginTop: 0}}>Notification: Pending Email Change</h2>
+
+            <p>You have a pending email address change to <strong>{ user.new_email }</strong>. Click the link sent to you in the confirmation email in order to change your email address.</p>
+
+            <Button bsStyle="primary" type="submit" onClick={::this.handleResendConfirmationEmail}>Resend Email</Button>&nbsp;
+
+            <Button bsStyle="primary" type="submit" onClick={::this.handleEmailChangeCancel}>Cancel Change</Button>
+          </Panel>
+        </Col>
+      </Row>
+    )
   }
 }
 
