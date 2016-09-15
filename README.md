@@ -1,6 +1,6 @@
 [![Poniverse Logo](https://poniverse.net/img/logo.svg)](https://poniverse.net)
 
-[![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.svg)](https://zenhub.com)
+<a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.svg"></a>
 
 Frontend for the Poniverse website
 
