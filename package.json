@@ -15,7 +15,7 @@
     "lint": "eslint app",
     "clean": "rimraf public && rimraf compiled",
     "start": "cross-env NODE_ENV=production node compiled/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon",
+    "dev": "cross-env NODE_ENV=development webpack-dashboard -- nodemon",
     "build:dev": "cross-env NODE_ENV=development ./node_modules/webpack/bin/webpack.js --colors --progress --config ./webpack/webpack.config.dev-server.js",
     "build:prod": "cross-env NODE_ENV=production ./node_modules/webpack/bin/webpack.js --colors --progress --config ./webpack/webpack.config.prod.js",
     "build:node": "cross-env NODE_ENV=production npm run babel -- ./server -d ./compiled",
@@ -120,6 +120,7 @@
     "url-loader": "^0.5.7",
     "warning": "^3.0.0",
     "webpack": "^1.13.2",
+    "webpack-dashboard": "^0.1.8",
     "webpack-dev-middleware": "^1.7.0",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-manifest-plugin": "^1.0.1"

@@ -5,6 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var StatsPlugin = require('stats-webpack-plugin');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 
 var commonLoaders = [
   {
@@ -96,6 +97,7 @@ module.exports = {
     new StatsPlugin('dev-client.json', {
       chunkModules: true,
       exclude: [/node_modules[\\\/]react/]
-    })
+    }),
+    new DashboardPlugin()
   ]
 };
