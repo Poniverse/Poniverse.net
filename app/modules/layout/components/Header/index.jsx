@@ -13,7 +13,8 @@ import classNames from 'classnames';
 class Header extends Component {
   static propTypes = {
     user: PropTypes.object,
-    onLoginClick: PropTypes.func
+    onLoginClick: PropTypes.func,
+    onRegisterClick: PropTypes.func
   };
 
   render() {
@@ -56,11 +57,12 @@ class Header extends Component {
   }
 
   renderGuest() {
-    const { onLoginClick } = this.props;
+    const { onLoginClick, onRegisterClick } = this.props;
 
     return (
       <Nav pullRight>
         <NavItem eventKey={1} href="#" onClick={onLoginClick}>Sign In</NavItem>
+        <NavItem eventKey={2} href="#" onClick={onRegisterClick}>Register</NavItem>
       </Nav>
     );
   }

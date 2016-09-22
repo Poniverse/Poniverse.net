@@ -5,6 +5,10 @@ import { getLoggedInUser, clearLoggedInUser } from '../../user/redux/user';
 export const START_AUTH = 'poniverse/auth/START_AUTH';
 export const FINISH_AUTH = 'poniverse/auth/FINISH_AUTH';
 
+export const START_REGISTRATION = 'poniverse/auth/START_REGISTRATION';
+export const FINISH_REGISTRATION = 'poniverse/auth/FINISH_REGISTRATION';
+export const SUCCESSFUL_REGISTRATION = 'poniverse/auth/SUCCESSFUL_REGISTRATION';
+
 export const LOGIN_REQUEST = 'poniverse/auth/LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'poniverse/auth/LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'poniverse/auth/LOGIN_FAILURE';
@@ -16,7 +20,9 @@ export const SET_ACCESS_TOKEN = 'poniverse/auth/SET_ACCESS_TOKEN';
 const initialState = {
   isFetching: false,
   showAuthModal: false,
-  accessToken: null
+  accessToken: null,
+  showRegistrationModal: false,
+  registrationSuccessful: false
 };
 
 export function reducer(state = initialState, action) {
@@ -30,6 +36,25 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         showAuthModal: false
+      };
+
+    case START_REGISTRATION:
+      return {
+        ...state,
+        showRegistrationModal: true
+      };
+
+    case SUCCESSFUL_REGISTRATION:
+      return {
+        ...state,
+        registrationSuccessful: true
+      };
+
+    case FINISH_REGISTRATION:
+      return {
+        ...state,
+        showRegistrationModal: false,
+        registrationSuccessful: false
       };
 
     case LOGIN_REQUEST:
@@ -52,6 +77,24 @@ export function reducer(state = initialState, action) {
       };
     default:
       return state;
+  }
+}
+
+export function startRegistration() {
+  return {
+    type: START_REGISTRATION
+  }
+}
+
+export function finishRegistration() {
+  return {
+    type: FINISH_REGISTRATION
+  }
+}
+
+export function successfulRegistration() {
+  return {
+    type: SUCCESSFUL_REGISTRATION
   }
 }
 
@@ -115,6 +158,19 @@ export function login(username, password) {
   };
 }
 
+export function register(data) {
+  return dispatch => {
+
+    return axios
+      .post('/users', data)
+      .then(res => {
+        dispatch(successfulRegistration());
+
+        return res;
+      });
+  }
+}
+
 export function setAccessToken(accessToken) {
   axios.defaults.headers.common = {
     ...axios.defaults.headers.common,
@@ -149,4 +205,11 @@ export function logout() {
         console.error('Logout', error);
       });
   };
+}
+
+export function registerUser(values) {
+  return dispatch => {
+    return axios
+      .post('/users', values)
+  }
 }

@@ -6,10 +6,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../../../style/vendor.scss';
 import './Shell.scss';
-import { startAuth, finishAuth, logout } from '../../auth/redux/auth';
+import { startAuth, finishAuth, logout, startRegistration } from '../../auth/redux/auth';
 import { getLoggedInUser } from '../../user/redux/user';
 import { Field, reduxForm } from 'redux-form';
 import LoginFormModal from '../../auth/containers/LoginFormModal';
+import RegistrationFormModal from '../../auth/containers/RegistrationFormModal';
 import Notifications from 'react-notification-system-redux';
 
 /*
@@ -34,12 +35,13 @@ class Shell extends Component {
     return (
       <div className="shell">
         <Notifications notifications={notifications} />
-        <Header user={user} onLoginClick={actions.startAuth} onLogoutClick={actions.logout} />
+        <Header user={user} onLoginClick={actions.startAuth} onRegisterClick={actions.startRegistration} onLogoutClick={actions.logout} />
         <main>
           { children }
         </main>
         <Footer />
         <LoginFormModal />
+        <RegistrationFormModal />
       </div>
     );
   }
@@ -54,7 +56,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators({startAuth, finishAuth, getLoggedInUser, logout}, dispatch) };
+  return { actions: bindActionCreators({startAuth, finishAuth, getLoggedInUser, logout, startRegistration}, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shell);
