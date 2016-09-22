@@ -20,6 +20,11 @@ class Activate extends Component {
   componentWillMount() {
     const { actions, params: { code }, loggedIn } = this.props;
 
+    if (__ISSERVER__) {
+      // Do not process this on the server
+      return;
+    }
+
     actions.activateAccount(code).then((response) => {
       let message = 'Your account has been successfully activated!';
 
