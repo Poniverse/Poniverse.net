@@ -7,6 +7,8 @@ import axios from 'axios';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import App from '../public/assets/server';
+import fs from 'fs';
+import https from 'https';
 
 const app = express();
 
@@ -49,3 +51,18 @@ routesConfig(app);
 app.get('*', App);
 
 app.listen(app.get('port'));
+
+if (process.env.SSL_ENABLE) {
+  const options = {
+    key: fs.readFileSync(process.env.HOME + '/.localhost-ssl/key.pem'),
+    cert: fs.readFileSync(process.env.HOME + '/.localhost-ssl/cert.pem'),
+    requestCert: false,
+    rejectUnauthorized: false
+  };
+
+  https.createServer(options, app).listen(3001, function(){
+    console.log("https server started at port 3001");
+  });
+
+
+}
