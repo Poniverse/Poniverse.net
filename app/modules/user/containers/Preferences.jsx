@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { reset } from 'redux-form';
-import { Grid, Button, Row, Col, Panel, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import { getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser } from '../redux/user';
-import AccountForm from '../components/AccountForm';
-import PasswordForm from '../components/PasswordForm';
-import NewsletterForm from '../components/NewsletterForm';
-import notification  from 'react-notification-system-redux';
+import React, {Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {Link} from "react-router";
+import {reset} from "redux-form";
+import {Grid, Button, Row, Col, Panel, Form, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
+import {getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser} from "../redux/user";
+import {addTwoFactorStart} from "../redux/2fa";
+import AccountForm from "../components/AccountForm";
+import PasswordForm from "../components/PasswordForm";
+import NewsletterForm from "../components/NewsletterForm";
+import notification from "react-notification-system-redux";
+import TwoFactorModal from "./TwoFactorModal";
 
 const successNotification = {
   title: 'Account Updated!',
@@ -144,7 +146,7 @@ class Preferences extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, actions } = this.props;
 
     return (
       <Grid>
@@ -197,6 +199,22 @@ class Preferences extends Component {
             </Panel>
           </Col>
         </Row>
+
+        <Row>
+          <Col xs={12}>
+            <Panel>
+              <h2 style={{marginTop: 0}}>Security</h2>
+
+              <p>
+                Give a shit about your security, enable 2FA today!
+              </p>
+
+              <Button onClick={actions.addTwoFactorStart}>Button</Button>
+            </Panel>
+          </Col>
+        </Row>
+
+        <TwoFactorModal />
       </Grid>
     );
   }
@@ -231,7 +249,15 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      ...bindActionCreators({getLoggedInUser, subscribeToNewsletter, unsubscribeFromNewsletter, updateUser, reset, ...notification}, dispatch),
+      ...bindActionCreators({
+        getLoggedInUser,
+        subscribeToNewsletter,
+        unsubscribeFromNewsletter,
+        updateUser,
+        reset,
+        addTwoFactorStart,
+        ...notification
+      }, dispatch),
     }
   };
 }

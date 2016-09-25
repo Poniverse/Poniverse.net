@@ -1,3 +1,4 @@
+import Bluebird from "bluebird";
 import 'intl';
 
 import React from 'react';
@@ -12,6 +13,9 @@ import createRoutes from './routes.jsx';
 import configureStore from './store/configureStore';
 import { useScroll } from 'react-router-scroll';
 import AuthInterceptor from './api/authInterceptor';
+
+global.Promise = Bluebird; // Replace global Promise with Bluebird!
+Promise.longStackTraces();
 
 // Grab the state from a global injected into
 // server-generated HTML

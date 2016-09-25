@@ -6,8 +6,11 @@ export const USER_FAILURE = 'poniverse/user/USER_FAILURE';
 
 export const USER_CLEAR = 'poniverse/user/USER_CLEAR';
 
+export const USER_SET_TWO_FACTOR_METHODS = 'poniverse/user/USER_SET_TWO_FACTOR_METHODS';
+
 const initialState = {
   isFetching: false,
+  loggedIn: false,
   data: null,
 };
 
@@ -31,6 +34,11 @@ export function reducer(state = initialState, action) {
     case USER_CLEAR:
       return {
         ...initialState
+      };
+    case USER_SET_TWO_FACTOR_METHODS:
+      return {
+        ...state,
+        twoFactor: action.data
       };
     default:
       return state;
