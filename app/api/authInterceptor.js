@@ -40,7 +40,7 @@ export default class AuthInterceptor {
   }
 
   requestFailure(error) {
-    if (this.ignoredUrls.length = 0) {
+    if (this.ignoredUrls.length == 0) {
       this.ignoredUrls.push('/auth/login');
       this.ignoredUrls.push('/auth/refresh');
       this.ignoredUrls.push('/auth/logout');
