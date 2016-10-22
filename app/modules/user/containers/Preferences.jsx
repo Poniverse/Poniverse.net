@@ -200,7 +200,7 @@ class Preferences extends Component {
           </Col>
         </Row>
 
-        <Row>
+        {/*<Row>
           <Col xs={12}>
             <Panel>
               <h2 style={{marginTop: 0}}>Security</h2>
@@ -212,7 +212,7 @@ class Preferences extends Component {
               <Button onClick={actions.addTwoFactorStart}>Button</Button>
             </Panel>
           </Col>
-        </Row>
+        </Row>*/}
 
         <TwoFactorModal />
       </Grid>
